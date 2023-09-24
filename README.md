@@ -14,12 +14,12 @@ What is this startup? Housing is an enormous problem for students in Provo. One 
 3. Twilio for the texting
 4. Node JS for the server
 
-![login](Screenshot 2023-09-23 8.12.53 PM.png)
+![login](login.jpg)
 
-![apartments](Screenshot 2023-09-23 8.13.18 PM.png)
+![apartments](aparments.jpg)
 
-![data](Screenshot 2023-09-23 8.13.34 PM.png)
+![data](data.jpg)
 
-![maintenance/requests](Screenshot 2023-09-23 8.13.43 PM.png)
+![maintenance/requests](maintenanace.jpg)
 
-![outbound](Screenshot 2023-09-23 8.14.04 PM.png)
+![outbound](outbound.jpg)
