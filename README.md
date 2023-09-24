@@ -16,10 +16,10 @@ What is this startup? Housing is an enormous problem for students in Provo. One 
 
 ![login](login.jpg)
 
-![apartments](aparments.jpg)
+![apartments](apartments.jpg)
 
 ![data](data.jpg)
 
-![maintenance/requests](maintenanace.jpg)
+![maintenance/requests](maintenance.jpg)
 
 ![outbound](outbound.jpg)
