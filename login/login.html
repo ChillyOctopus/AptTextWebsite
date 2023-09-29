@@ -1,8 +1,54 @@
 <!DOCTYPE html>
-    <body>
-        <h1>f</h1>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simon HTML</title>
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header>
+      <h1>QuikDwell<sup>&reg;</sup></h1>
 
+      <!-- Navigation elements -->
+      <!--
+        We dont need this in the login page yet
+      <nav>
+        Menu is a semantic alternative to <ul> that represents an interaction
+            <menu>
+                <li><a href="apartments.html">Apartments</a></li>
+                <li><a href="data.html">Data</a></li>
+                <li><a href="maitenance.html">Maintenance</a></li>
+                <li><a href="outbound.html">Outbound</a></li>
+              </menu>
+            </nav>
+      -->
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
 
+      <hr />
+    </header>
 
+    <main>
+      <h1>Welcome</h1>
+      <p>Login</p>
+      <form method="get" action="~/apartments/apartments.html">
 
-    </body>
+        <input type="text" id="name" placeholder="Username" />
+        <br>
+        <input type="password" id="password" placeholder="Password"/>
+        <br>
+        <button type="submit">Login</button>
+
+      </form>
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Author Name(s)</span>
+      <br />
+      <a href="https://github.com/webprogramming260/simon-html">GitHub</a>
+    </footer>
+  </body>
+</html>
