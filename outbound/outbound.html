@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Tell browsers not to scale the viewport automatically -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simon HTML</title>
+    <link rel="icon" href="favicon.ico" />
+  </head>
+  <body>
+    <!-- Use header, main, and footer elements to give semantic structure -->
+    <header>
+      <h1>QuikDwell<sup>&reg;</sup></h1>
+      <!-- Navigation elements -->
+        <nav>
+            <menu>
+                <li><a href="../apartments/apartments.html">Apartments</a></li>
+                <li><a href="../data/data.html">Data</a></li>
+                <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
+                <li><a href="../outbound/outbound.html">Outbound</a></li>
+            </menu>
+        </nav>
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
+
+      <hr />
+    </header>
+
+    <main>
+      <h1>Please enter your message. This will be sent to  all numbers on file.</h1>
+      <form method="post">
+
+        <input type="text" id="message" placeholder="Message"/>
+        <br>
+        <button type="submit">Send</button>
+
+      </form>
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Author Name(s)</span>
+      <br />
+      <a href="https://github.com/webprogramming260/simon-html">GitHub</a>
+    </footer>
+  </body>
+</html>
