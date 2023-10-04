@@ -1,3 +1,13 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,11 +37,29 @@
     </header>
 
     <main>
+
       <h1>Maintenance requests</h1>
-      <ul>Name</ul>
-      <ul>Apt number</ul>
-      <ul>Phone number</ul>
-      <ul>Issue</ul>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Apt number</th>
+            <th>Phone number</th>
+            <th>Issue</th>
+            <th>Mark resolved</th>
+            <th>Send email</th>
+          </tr>
+        </thead>
+        <tr>
+          <td>Josh G.</td>
+          <td>100</td>
+          <td>123-456-7890</td>
+          <td>Note that all of this will be from database.</td>
+          <td><button type="button" class="btn-default">Clear</button></td>
+          <td><button type="button" class="btn-default">To maintenance</button></td>
+        </tr>
+      </table>
+
     </main>
     
     <footer>

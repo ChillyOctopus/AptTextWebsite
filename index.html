@@ -1,3 +1,13 @@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,16 +42,20 @@
 
     <main>
       <h1>Welcome</h1>
-      <p>Login</p>
-      <form method="get" action="~/apartments/apartments.html">
+      <h2>Please login</h2>
 
-        <input type="text" id="name" placeholder="Username" />
-        <br>
-        <input type="password" id="password" placeholder="Password"/>
-        <br>
-        <button type="submit">Login</button>
-
+      <form action="../apartments/apartments.html">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
       </form>
+
     </main>
 
     <footer>
