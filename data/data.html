@@ -9,67 +9,70 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <!-- Use header, main, and footer elements to give semantic structure -->
-    <header>
-      <h1>QuikDwell<sup>&reg;</sup></h1>
-      <!-- Navigation elements -->
-          <nav>
-            <menu>
-                <li><a href="../apartments/apartments.html">Apartments</a></li>
-                <li><a href="../data/data.html">Data</a></li>
-                <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
-                <li><a href="../outbound/outbound.html">Outbound</a></li>
-            </menu>
-          </nav>
-    <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
-    <hr />
-    </header>
+    <div class="container-fluid">
 
-    <main>
-
-      
-      <h1>Database data for your account</h1>
-
-      <table class="table">
-        <tr>
-          <td>Texts sent</td>
-          <td>From database</td>
-        <tr>
-        <tr>
-          <td>Texts received</td>
-          <td>From database</td>
-        </tr>
-        <tr>
-          <td>Phone numbers seen</td>
-          <td>From database</td>
-        </tr>
-        <tr>
-          <td>Phone numbers on file</td>
-          <td>From database</td>
-        </tr>
-      <table>
-
-        <form class="form-inline" action="post">
-          <div class="form-group">
-            <label for="number">Enter number to block</label>
-            <input type="number" class="form-control" id="number">
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-default">Submit</button>
-          </div>
-        </form>
-      
-    </main>
-
-    <footer>
+      <!-- Use header, main, and footer elements to give semantic structure -->
+      <header>
+        <h1>QuikDwell<sup>&reg;</sup></h1>
+        <!-- Navigation elements -->
+            <nav>
+              <menu>
+                  <li><a href="../apartments/apartments.html">Apartments</a></li>
+                  <li><a href="../data/data.html">Data</a></li>
+                  <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
+                  <li><a href="../outbound/outbound.html">Outbound</a></li>
+              </menu>
+            </nav>
+      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
       <hr />
-      <span class="text-reset">Author Name(s)</span>
-      <br />
-      <a href="https://lethallegacy.click">About Me</a>
-    </footer>
+      </header>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <main>
+        
+        <h1>Database data for your account</h1>
+
+        <table class="table">
+          <tr>
+            <td>Texts sent</td>
+            <td>From database</td>
+          <tr>
+          <tr>
+            <td>Texts received</td>
+            <td>From database</td>
+          </tr>
+          <tr>
+            <td>Phone numbers seen</td>
+            <td>From database</td>
+          </tr>
+          <tr>
+            <td>Phone numbers on file</td>
+            <td>From database</td>
+          </tr>
+        <table>
+
+          <form class="form-inline" action="post">
+            <div class="form-group">
+              <label for="number">Enter number to block</label>
+              <input type="number" class="form-control" id="number">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+          </form>
+        
+      </main>
+
+      <footer>
+        <hr />
+        <span class="text-reset">Author Name(s)</span>
+        <br />
+        <a href="https://lethallegacy.click">About Me</a>
+      </footer>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    </div>
   </body>
 </html>

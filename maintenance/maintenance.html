@@ -9,59 +9,62 @@
     <link rel="icon" href="favicon.ico" />
   </head>
   <body>
-    <!-- Use header, main, and footer elements to give semantic structure -->
-    <header>
-      <h1>QuikDwell<sup>&reg;</sup></h1>
+    <div class="container-fluid">
+      <!-- Use header, main, and footer elements to give semantic structure -->
+      <header>
+        <h1>QuikDwell<sup>&reg;</sup></h1>
 
-      <!-- Navigation elements -->
-        <nav>
-            <menu>
-                <li><a href="../apartments/apartments.html">Apartments</a></li>
-                <li><a href="../data/data.html">Data</a></li>
-                <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
-                <li><a href="../outbound/outbound.html">Outbound</a></li>
-            </menu>
-        </nav>
-      <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
+        <!-- Navigation elements -->
+          <nav>
+              <menu>
+                  <li><a href="../apartments/apartments.html">Apartments</a></li>
+                  <li><a href="../data/data.html">Data</a></li>
+                  <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
+                  <li><a href="../outbound/outbound.html">Outbound</a></li>
+              </menu>
+          </nav>
+        <!-- Since we don't have the ability to style we use old style HTML to give some visual formatting -->
 
-      <hr />
-    </header>
+        <hr />
+      </header>
 
-    <main>
+      <main>
 
-      <h1>Maintenance requests</h1>
-      <table class="table">
-        <thead>
+        <h1>Maintenance requests</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Apt number</th>
+              <th>Phone number</th>
+              <th>Issue</th>
+              <th>Mark resolved</th>
+              <th>Send email</th>
+            </tr>
+          </thead>
           <tr>
-            <th>Name</th>
-            <th>Apt number</th>
-            <th>Phone number</th>
-            <th>Issue</th>
-            <th>Mark resolved</th>
-            <th>Send email</th>
+            <td>Josh G.</td>
+            <td>100</td>
+            <td>123-456-7890</td>
+            <td>Note that all of this will be from database.</td>
+            <td><button type="button" class="btn-default">Clear</button></td>
+            <td><button type="button" class="btn-default">To maintenance</button></td>
           </tr>
-        </thead>
-        <tr>
-          <td>Josh G.</td>
-          <td>100</td>
-          <td>123-456-7890</td>
-          <td>Note that all of this will be from database.</td>
-          <td><button type="button" class="btn-default">Clear</button></td>
-          <td><button type="button" class="btn-default">To maintenance</button></td>
-        </tr>
-      </table>
+        </table>
 
-    </main>
+      </main>
+      
+      <footer>
+        <hr />
+        <span class="text-reset">Author Name(s)</span>
+        <br />
+        <a href="https://lethallegacy.click">About Me</a>
+      </footer>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
-    <footer>
-      <hr />
-      <span class="text-reset">Author Name(s)</span>
-      <br />
-      <a href="https://lethallegacy.click">About Me</a>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>
   </body>
 </html>
