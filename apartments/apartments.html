@@ -28,101 +28,105 @@
       </header>
 
       <main>
-          <h3>Welcome back ______, here are your apartments</h3>
+          <h2>Welcome back ______, here are your apartments</h2>
 
           <br>
-          <br>
-          <br>
     
-          <table class="table table-sm">
-            <thead>
+          <div class="container-fluid justify-content-center">
+            <table class="table w-75">
+              <thead>
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Gender</th>
+                  <th scope="col">Flatmates</th>
+                  <th scope="col">Price / Month</th>
+                  <th scope="col"># Available</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
               <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Flatmates</th>
-                <th scope="col">Price / Month</th>
-                <th scope="col"># Available</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <td>Private</td>
+                <td>M</td>
+                <td>4</td>
+                <td>650$</td>
+                <td>37</td>
+                <td><button type="button" class="btn-default">+</button></td>
+                <td><button type="button" class="btn-default">-</button></td>
+                <td><button type="button" class="btn-default">Delete</button></td>
               </tr>
-            </thead>
-            <tr>
-              <td>Private</td>
-              <td>M</td>
-              <td>4</td>
-              <td>650$</td>
-              <td>37</td>
-              <td><button type="button" class="btn-default">+</button></td>
-              <td><button type="button" class="btn-default">-</button></td>
-              <td><button type="button" class="btn-default">Delete</button></td>
-            </tr>
-            <tr>
-              <td>Shared</td>
-              <td>M</td>
-              <td>6</td>
-              <td>599$</td>
-              <td>19</td>
-              <td><button type="button" class="btn-default">+</button></td>
-              <td><button type="button" class="btn-default">-</button></td>
-              <td><button type="button" class="btn-default">Delete</button></td>
-            </tr>
-            <tr>
-              <td>Shared</td>
-              <td>F</td>
-              <td>6</td>
-              <td>599$</td>
-              <td>22</td>
-              <td><button type="button" class="btn-default">+</button></td>
-              <td><button type="button" class="btn-default">-</button></td>
-              <td><button type="button" class="btn-default">Delete</button></td>
-              
-            </tr>
-          </table>
-    
-          <button type="button" class="btn-default">Save changes</button>
-    
+              <tr>
+                <td>Shared</td>
+                <td>M</td>
+                <td>6</td>
+                <td>599$</td>
+                <td>19</td>
+                <td><button type="button" class="btn-default">+</button></td>
+                <td><button type="button" class="btn-default">-</button></td>
+                <td><button type="button" class="btn-default">Delete</button></td>
+              </tr>
+              <tr>
+                <td>Shared</td>
+                <td>F</td>
+                <td>6</td>
+                <td>599$</td>
+                <td>22</td>
+                <td><button type="button" class="btn-default">+</button></td>
+                <td><button type="button" class="btn-default">-</button></td>
+                <td><button type="button" class="btn-default">Delete</button></td>
+                
+              </tr>
+            </table>
+      
+            <button type="button" class="btn-default">Update!</button>
+      
+          </div>
+
+          <br>
           <hr/>
+          <br>
     
           <h4>Make a new apt group here</h4>
 
-          <form class="form-inline">
+          <form class="form-inline" style="width: 75%; gap: 30px;">
             <div class="form-group">
-              <label for="type">Type</label>
-              <select class="form-control" id="type">
+              <label for="type" style="padding: 10px;">Type</label>
+              <select class="form-control" id="type" style="width: 6em">
                 <option>Private</option>
                 <option>Shared</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="gender">Gender</label>
-              <select class="form-control" id="gender">
-                <option>Male</option>
-                <option>Female</option>
-                <option>Both or N/A</option>
+              <label for="gender" style="padding: 10px;">Gender</label>
+              <select class="form-control" id="gender" style="width: 5em">
+                <option>M</option>
+                <option>F</option>
+                <option>N/A</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="flatmates">Flatmates Besides Roomate</label>
-              <input type="number" class="form-control" min="0" max="99" id="flatmates">
+              <label for="flatmates" style="padding: 10px;">Flatmates</label>
+              <input type="number" class="form-control " min="0" max="99" id="flatmates" style="width: 4em">
             </div>
             <div class="form-group">
-              <label for="price">Price / Month</label>
-              <input type="number" class="form-control" id="price">
+              <label for="price" style="padding: 10px;">Price / Month</label>
+              <input type="number" class="form-control" id="price" style="width: 5.5em">
             </div>
             <div class="form-group">
-              <label for="available">Number Available</label>
-              <input type="number" class="form-control" id="available">
+              <label for="available" style="padding: 10px;">Number Available</label>
+              <input type="number" class="form-control" id="available" style="width: 5.5em">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <div class="form-group">
+              <button type="submit" class="btn btn-default" style="margin: 30px;">Create</button>
+            </div>
           </form>
 
       </main>
 
+      <br>
       <footer>
         <hr />
-        <span class="text-reset">Author Name(s)</span>
-        <br />
         <a href="https://lethallegacy.click">About Me</a>
       </footer>
 
