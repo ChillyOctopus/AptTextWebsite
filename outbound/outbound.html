@@ -4,51 +4,66 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <!-- Tell browsers not to scale the viewport automatically -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simon HTML</title>
-    <link rel="icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>QuikDwell</title>
+    <link rel="icon" href="favicon.ico"/>
   </head>
+
   <body>
     <div class="container-fluid">
         <!-- Use header, main, and footer elements to give semantic structure -->
-      <header>
-        <h1>QuikDwell<sup>&reg;</sup></h1>
-        <!-- Navigation elements -->
-          <nav>
-              <menu>
-                  <li><a href="../apartments/apartments.html">Apartments</a></li>
-                  <li><a href="../data/data.html">Data</a></li>
-                  <li><a href="../maintenance/maintenance.html">Maintenance</a></li>
-                  <li><a href="../outbound/outbound.html">Outbound</a></li>
-              </menu>
-          </nav>
+        <header>
 
-        <hr />
-      </header>
+          <div class="container-fluid" style="margin-top: 15px; margin-bottom: 20px;">
+            <h1>QuikDwell<sup>&reg;</sup></h1>
+          </div>
+          <div class="container-fluid" style="margin-left: 10px;">
+            <ul class="nav">
+              <li class="nav-item" style="margin-right: 10px;"><a href="../apartments/apartments.html" class="btn btn-sm btn-outline-dark" role="button">Apartments</a></li>
+              <li class="nav-item" style="margin-right: 10px;"><a href="../data/data.html" class="btn btn-sm btn-outline-dark" role="button">Data</a></li>
+              <li class="nav-item" style="margin-right: 10px;"><a href="../maintenance/maintenance.html" class="btn btn-sm btn-outline-dark" role="button">Maintenance</a></li>
+              <li class="nav-item" style="margin-right: 10px;"><a href="../outbound/outbound.html" class="btn btn-sm btn-outline-dark" role="button">Outbound</a></li>
+            </ul>
+          </div>
+  
+        </header>
 
       <main>
-        <h1>Enter your message. This will be sent to  all numbers on file.</h1>
+        <div class="container-fluid" style="align-items: center;">
+          <div class="row" style="justify-content: center; width: 100%;">
+            <h2 style="margin-top: 60px; margin-bottom: 60px;">Send a message to everyone!</h2>
+            <div class="col-xl-12"></div>
 
-        <form>
-          <div class="form-group">
-            <label for="message">Message</label>
-            <input type="text" class="form-control" id="message">
+            <div class="row" style="justify-content: center; width: 100%;">
+              <form class="form-inline" style="width: 100%; justify-content: center;">
+                <div class="form-group" style="width: 75%;">
+                  <input type="text" class="form-control" id="number" style="width: 100%;" placeholder="Mass message">
+                </div>
+              </form>
+            </div>
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+
+
+            <div class="row" style="justify-content: center; margin-top: 40px; margin-bottom: 50px;">
+              <button type="button" class="btn btn-info btn-lg">
+                Send
+              </button>
+            </div>
+        </div>
+  
       </main>
 
-      <footer>
+
+      <br>
+      <footer style="margin: 20px;">
         <hr />
-        <span class="text-reset">Author Name(s)</span>
-        <br />
         <a href="https://lethallegacy.click">About Me</a>
       </footer>
-
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
   </body>
 </html>
