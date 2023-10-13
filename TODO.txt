@@ -1,6 +1,5 @@
 In general:
     TODO make buttons as outlines - if data is changed, enable them and make them full
-    TODO decide if you want to implement ChatGPT inside of this for "expert apartment advice"
 
 In Apartments:
     TODO decide if text needs to be larger in tables for readability
@@ -9,9 +8,8 @@ In Data:
     TODO be able to unblock a number, show how many or which numbers are currently blocked
 
 In Maintenance:
-
     TODO if the requests are equal to 100, stop accepting them and tell the complex they won't receive more until there is space.
     TODO make every phone number only able to send in 2 requests
     TODO put the "important" marked requests first, then sort everything by earliest date
     TODO add form for maintenance contact - maybe set it up for email
-    TODO decide on a location for a clearAll button
+    TODO decide on a location for a clearAll button if wanted
