@@ -33,60 +33,304 @@
 
         <div class="col-xl-12" style="margin: 30px;"></div> <!--To make our spacing correct-->
   
-        <section style="background-color: #eee; margin-bottom: 50px;">
+        <section style="background-color: #eee; margin-bottom: 20px;">
           <div class="container py-5">
             <div class="row d-flex justify-content-center">
               <div class="col-md-8 col-lg-6 col-xl-12">
-                <div class="card" id="chat1" style="border-radius: 15px;">
-                  
-                  <!--example chat of assistant-->
-                  <div
-                    class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
-                    style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                    <i class="fas fa-angle-left"></i>
-                    <p class="mb-0 fw-bold">Chat with your Assistant</p>
-                    <i class="fas fa-times"></i>
-                  </div>
+
+                <!--card header-->
+                <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                  style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                  <i class="fas fa-angle-left"></i>
+                  <p class="mb-0 fw-bold">Chat with your Assistant</p>
+                  <i class="fas fa-times"></i>
+                </div>
+
+                <div class="card" id="chat1" style="max-height: 475px; overflow-y: scroll;">
+
+                  <!--card body-->
                   <div class="card-body">
         
-                  <!--example chat of user-->
-
-                  <div class="d-flex flex-row justify-content-start mb-4">
-                    <img src="/assets/openAiLogo.png"
-                      alt="avatar 1" style="width: 45px; height: 100%; padding: 5px;">
-                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                      <p class="small mb-0">Hello (User), how can I help you today?</p>
+                    <!--example chat of assistant-->
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                      <img src="/assets/openAiLogo.png"
+                        alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                      <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                        <p class="small mb-0">Hello (User), how can I help you today?</p>
+                      </div>
                     </div>
-                  </div>
+          
+                    <!--example chat of user-->
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">I have a question about renters insurance.</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
         
-                  <div class="d-flex flex-row justify-content-end mb-4">
-                    <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
-                      <p class="small mb-0">I have a question about renters insurance.</p>
+                    <div class="d-flex flex-row justify-content-start mb-4">
+                      <img src="/assets/openAiLogo.png"
+                        alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                      <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                        <p class="small mb-0">Sure thing, what is your question?</p>
+                      </div>
                     </div>
-                    <img src="/assets/spyglas.png"
-                    alt="avatar 1" style="width: 45px; height: 100%; padding: 5px;">
-                  </div>
-      
-                  <div class="d-flex flex-row justify-content-start mb-4">
-                    <img src="/assets/openAiLogo.png"
-                      alt="avatar 1" style="width: 45px; height: 100%; padding: 5px;">
-                    <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                      <p class="small mb-0">Sure thing, what is your question?</p>
-                    </div>
-                  </div>
 
-                  <div class="d-flex flex-row justify-content-end mb-4">
-                    <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
-                      <p class="small mb-0">Is there an option for Provo students to not have it? Am I able to charge them until they bleed for it?</p>
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">Is there an option for Provo students to not have it? Am I able to charge them until they bleed for it?</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
                     </div>
-                    <img src="/assets/spyglas.png"
-                    alt="avatar 1" style="width: 45px; height: 100%; padding: 5px;">
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+          
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-end mb-4">
+                      <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
+                        <p class="small mb-0">This is a scrolling test</p>
+                      </div>
+                      <img src="/assets/spyglas.png"
+                      alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
+                    </div>
+
+                  <!--end card body-->
                   </div>
-        
-                    <div class="form-outline">
-                      <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
-                      <label class="form-label" for="textAreaExample">Type your message</label>
-                    </div>
+          
+                  <div class="form-outline" style="padding: 15px;">
+                    <textarea class="form-control" id="textAreaExample" rows="3" style="resize: none;" placeholder="Type your message"></textarea>
                   </div>
                 </div>
               </div>
