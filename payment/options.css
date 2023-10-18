@@ -2,24 +2,85 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-auto-rows: 300px;
+    grid-auto-rows: 330px;
     grid-gap: 3em;
   }
 
   .card {
     border: #333 solid thick;
-    border-radius: 1em;
+    border-radius: 5%;
+    justify-content: center; 
+    align-items: center;
   }
+
+  .card-img {
+    border-radius: 5%;
+    max-width: 95%;
+    max-height: 95%;
+  }
+
+  #gpayQR {
+    border-radius: 20%;
+  }
+
+  #paypalLogo {
+    width: 80%;
+  }
+
+  #zelleQR {
+    height: 100%;
+  }
+
   
-  /*
-  .card:nth-child(odd) {
-    background: hsl(220, 25%, 70%);
-  }
+/* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-box {
+  background-color: transparent;
+  border-radius: 5%;
+  width: 100%;
+  height: 100%;
+  perspective: 500px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.25s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+
+  position: absolute;  
+  border-radius: 5%;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
   
-  .card:nth-child(even) {
-    background: hsl(420, 25%, 70%);
-  }
-  */
-  
-  #paypal{
-  }
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+  background-color: white;
+  color: black;
+}
+
+/* Style the back side */
+.flip-box-back {
+  background-color: white;
+  color: white;
+  transform: rotateY(180deg);
+}
