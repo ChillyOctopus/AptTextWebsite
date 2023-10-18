@@ -19,11 +19,6 @@
     max-height: 95%;
   }
 
-  #infoCard {
-    justify-content: left;
-    align-items: center;
-  }
-
   #gpayQR {
     border-radius: 20%;
   }
@@ -86,6 +81,6 @@
 /* Style the back side */
 .flip-box-back {
   background-color: white;
-  color: white;
+  color: black;
   transform: rotateY(180deg);
 }
