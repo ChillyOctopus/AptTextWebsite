@@ -19,6 +19,11 @@
     max-height: 95%;
   }
 
+  #infoCard {
+    justify-content: left;
+    align-items: center;
+  }
+
   #gpayQR {
     border-radius: 20%;
   }
