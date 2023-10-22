@@ -31,9 +31,12 @@ function addListing() {
         </button>
         </div>
     </td>
-        <td style="vertical-align: middle;"><button type="button" class="btn btn-danger delete-button">Delete</button></td>
-    </td>
+    <td style="vertical-align: middle;"><button type="button" class="btn btn-danger delete-button">Delete</button></td>
   `;
+
+    let increaseTimer;
+    let decreaseTimer;
+    const timeGapOfRepeatedIncreases = 75;
 
     // Add an event listener to the new "Delete" button
     const deleteButton = newRow.querySelector(".delete-button");
@@ -41,20 +44,44 @@ function addListing() {
         deleteListing(newRow);
     });
 
-    //Add an event listener to the new "add" button
+    // Add an event listener to the new "add" button (one click)
     const addButton = newRow.querySelector(".btn-add");
-    addButton.addEventListener("click", function (){
+    addButton.addEventListener("click", function () {
         increaseAvailability(newRow);
     });
+    
+    // Add an event listener to the new "add" button (hold click)
+    addButton.addEventListener("mousedown", function () {
+        increaseTimer = setInterval(function () {
+            increaseAvailability(newRow);
+        }, timeGapOfRepeatedIncreases); // Adjust the interval as needed
+    });
 
-    //Add an event listener to the new "subtract" button
+    // Stop increasing when the mouse button is released (hold release)
+    addButton.addEventListener("mouseup", function () {
+        clearInterval(increaseTimer);
+    });
+
+    // Add an event listener to the new "subtract" button (one click)
     const subtractButton = newRow.querySelector(".btn-subtract");
-    addButton.addEventListener("click", function (){
+    subtractButton.addEventListener("click", function () {
         decreaseAvailability(newRow);
     });
 
-  // Reset the form fields
-  form.reset();
+    // Add an event listener to the new "subtract" button (hold click)
+    subtractButton.addEventListener("mousedown", function () {
+        decreaseTimer = setInterval(function () {
+            decreaseAvailability(newRow);
+        }, timeGapOfRepeatedIncreases); // Adjust the interval as needed
+    });
+
+    // Stop decreasing when the mouse button is released (hold release)
+    subtractButton.addEventListener("mouseup", function () {
+        clearInterval(decreaseTimer);
+    });
+    
+    // Reset the form fields
+    form.reset();
 }
 
 // Function to delete a row when the "Delete" button is clicked
@@ -63,16 +90,20 @@ function deleteListing(row) {
     table.deleteRow(row.rowIndex);
 }
   
-//Function to increase an apartments availability when the up button is clicked
-function increaseAvailability(row){
-    const table = document.getElementById("listingTable");
-    const current = table.row. available;
-    table.row.available = current + 1;
+//Function to increase an apartment's availability when the up button is clicked
+function increaseAvailability(row) {
+    changeAvailability(row, 1);
 }
- 
-//Function to decrease an apartments availability when the up button is clicked
-function decreaseAvailability(row){
-    const table = document.getElementById("listingTable");
-    const current = table.row.available;
-    table.row.available = current - 1;
+
+//Function to decrease an apartment's availability when the down button is clicked
+function decreaseAvailability(row) {
+    changeAvailability(row, -1);
+}
+
+//General function to change availability
+function changeAvailability(row, amount){
+    const cellIndex = 4; // Index of the "available" cell in the row (0-based)
+    const cell = row.cells[cellIndex]; // Use row.cells to access the cell
+    const current = cell.textContent;
+    cell.textContent = parseInt(current) + amount;
 }
