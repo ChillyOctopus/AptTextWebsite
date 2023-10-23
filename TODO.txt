@@ -1,15 +1,18 @@
 In general:
-    TODO make buttons as outlines - if data is changed, enable them and make them full
+    -  make buttons disabled when you click them, once their function is done. Then enable them when changes are made.
+    -  check data inside of forms before you allow them to submit the form or press the button.
 
 In Apartments:
-    TODO decide if text needs to be larger in tables for readability
+    -  decide if text needs to be larger in tables for readability
 
 In Data:
-    TODO be able to unblock a number, show how many or which numbers are currently blocked
+    -  be able to unblock a number, show how many or which numbers are currently blocked
 
 In Maintenance:
-    TODO if the requests are equal to 100, stop accepting them and tell the complex they won't receive more until there is space.
-    TODO make every phone number only able to send in 2 requests
-    TODO put the "important" marked requests first, then sort everything by earliest date
-    TODO add form for maintenance contact - maybe set it up for email
-    TODO decide on a location for a clearAll button if wanted
+    -  if the requests are equal to 100, stop accepting them and tell the complex they won't receive more until there is space.
+    -  make every phone number only able to send in 2 requests
+    -  sort by the "important" marked requests first, then sort everything by earliest date first
+    -  add form for maintenance contact - maybe set it up for email
+    -  decide on a location for a clearAll button if wanted
+    -  maybe decide if stars need to be bigger
+    -  
