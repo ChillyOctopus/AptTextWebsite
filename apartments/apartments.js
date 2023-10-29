@@ -1,4 +1,6 @@
 function addListing() {
+  enableSave();
+  document.getElementById("addListingButton").disabled = true;
   const table = document.getElementById("listingTable");
   const form = document.getElementById("addListingForm");
 
@@ -64,7 +66,7 @@ function addListing() {
 
     // Add an event listener to the new "subtract" button (one click)
     const subtractButton = newRow.querySelector(".btn-subtract");
-    subtractButton.addEventListener("click", function () {
+        subtractButton.addEventListener("click", function () {
         decreaseAvailability(newRow);
     });
 
@@ -86,6 +88,7 @@ function addListing() {
 
 // Function to delete a row when the "Delete" button is clicked
 function deleteListing(row) {
+    enableSave();
     const table = document.getElementById("listingTable");
     table.deleteRow(row.rowIndex);
 }
@@ -102,8 +105,40 @@ function decreaseAvailability(row) {
 
 //General function to change availability
 function changeAvailability(row, amount){
+    enableSave();
     const cellIndex = 4; // Index of the "available" cell in the row (0-based)
     const cell = row.cells[cellIndex]; // Use row.cells to access the cell
     const current = cell.textContent;
     cell.textContent = parseInt(current) + amount;
+}
+
+function enableSave(){
+    const button = document.getElementById("saveButton");
+    button.disabled = false;
+}
+
+function save(){
+    const button = document.getElementById("saveButton");
+    button.disabled = true;
+}
+
+function checkAddListingEnabled() {
+    const addButton = document.getElementById("addListingButton");
+    const type = document.getElementById("type").value;
+    const gender = document.getElementById("gender").value;
+    const flatmates = document.getElementById("flatmates").value;
+    const price = document.getElementById("price").value;
+    const available = document.getElementById("available").value;
+
+    if (
+        (type === "Private" || type === "Shared") &&
+        (gender === "M" || gender === "F" || gender === "N/A") &&
+        flatmates > 0 &&
+        price > 0 &&
+        available > 0
+    ) {
+        addButton.disabled = false;
+    } else {
+        addButton.disabled = true;
+    }
 }

@@ -68,13 +68,13 @@
             <form class="form-inline" style="width: 75%; gap: 10px; justify-content: center;">
               <label for="number">Block a number here:</label>
               <div class="form-group">
-                <input type="text" class="form-control" id="number" style="width: 12em;" placeholder="123-456-7890">
+                <input type="text" class="form-control" id="number" style="width: 12em;" placeholder="123-456-7890" oninput="checkInputValidity(this)">
               </div>
             </form>
           </div>
 
           <div class="row" style="justify-content: center; margin-top: 40px; margin-bottom: 50px;">
-            <button type="button" class="btn btn-info btn-lg" onclick="clearForm()">
+            <button type="button" id="blockButton" class="btn btn-info btn-lg" onclick="clearForm()" disabled="true">
               Block
             </button>
           </div>

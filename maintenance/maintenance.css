@@ -2,7 +2,7 @@
     color: orange;
 }
 
-.table td {
+.table td, .table tr, .table th {
     vertical-align: middle;
     justify-items: center;
     align-items: center;
