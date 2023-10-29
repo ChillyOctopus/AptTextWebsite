@@ -45,7 +45,7 @@
 
 
             <div class="row" style="justify-content: center; margin-top: 40px; margin-bottom: 50px;">
-              <button type="button" class="btn btn-info btn-lg" id="sendButton" disabled="true">
+              <button type="button" class="btn btn-info btn-lg" id="sendButton" disabled="true" onclick="send()">
                 Send
               </button>
             </div>
@@ -70,11 +70,13 @@
         </div>
 
         <div class="row" style="justify-content: center; margin-top: 40px; margin-bottom: 50px;">
-          <button type="button" class="btn btn-info btn-lg" id="saveButton" disabled="true">
+          <button type="button" class="btn btn-info btn-lg" id="saveButton" disabled="true" onclick="save()">
             Save
           </button>
         </div>
   
+        <div id="toast-container"></div>
+
       </main>
 
 
