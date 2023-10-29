@@ -7,12 +7,12 @@ In Apartments:
 
 In Data:
     -  be able to unblock a number, show how many or which numbers are currently blocked
+    -  re-disable the "Block" button when it is clicked and empties the form.
 
 In Maintenance:
     -  if the requests are equal to 100, stop accepting them and tell the complex they won't receive more until there is space.
     -  make every phone number only able to send in 2 requests
-    -  sort by the "important" marked requests first, then sort everything by earliest date first
     -  add form for maintenance contact - maybe set it up for email
     -  decide on a location for a clearAll button if wanted
-    -  maybe decide if stars need to be bigger
+    -  maybe decide if stars / text need to be bigger
     -  
