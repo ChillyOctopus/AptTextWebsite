@@ -1,5 +1,3 @@
-// Add this code to your assistant.js file
-
 document.addEventListener('DOMContentLoaded', function() {
     const textArea = document.getElementById('textAreaExample');
     const chatBody = document.getElementById('chat1');
@@ -13,21 +11,20 @@ document.addEventListener('DOMContentLoaded', function() {
   
         if (message) {
           // Create a new chat bubble
-          const chatBubble = document.createElement('div');
-          chatBubble.className = 'd-flex flex-row justify-content-end mb-4';
-          chatBubble.innerHTML = `
-            <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;">
-              <p class="small mb-0">${message}</p>
-            </div>
-            <img src="/assets/spyglas.png" alt="avatar 1" style="width: 45px; height: 100%; margin-top: 7px; padding: 3px;">
-          `;
-  
-          // Append the chat bubble to the chat body
-          chatBody.appendChild(chatBubble);
-  
+          // flip a coin to see if its the ai or us.
+          const coin = flipCoin();
+          if(coin){
+
+            const chatBubble = createUserChatBubble(message);
+            chatBody.appendChild(chatBubble);
+
+          } else {
+            const chatBubble = createAIChatBubble(message);
+            chatBody.appendChild(chatBubble);
+          }
+
           // Clear the textarea
           textArea.value = '';
-  
           // Scroll to the bottom of the chat body
           scrollChatToBottom();
         }
@@ -65,3 +62,39 @@ document.addEventListener('DOMContentLoaded', function() {
     return chatBubble;
   }
   
+  function createAIChatBubble(message){
+    const chatBubble = document.createElement('div');
+    chatBubble.className = 'd-flex flex-row justify-content-start mb-4';
+
+    const chatMessage = document.createElement('div');
+    chatMessage.className = 'p-3 ms-3'
+    chatMessage.style.borderRadius = '15px'
+    chatMessage.style.backgroundColor = 'rgba(57, 192, 237, .2)';
+    chatMessage.innerHTML = '<p class="small mb-0">' + message + '</p>';
+
+    const AIAvatar = document.createElement('img')    
+    AIAvatar.src = '/assets/openAiLogo.png'; // Replace with the AI's avatar image URL
+    AIAvatar.alt = 'AI Avatar';
+    AIAvatar.style.width = '45px';
+    AIAvatar.style.height = '100%';
+    AIAvatar.style.marginTop = '7px';
+    AIAvatar.style.padding = '3px';
+  
+    chatBubble.appendChild(AIAvatar);
+    chatBubble.appendChild(chatMessage);
+  
+    return chatBubble;
+  }
+
+// Function to simulate flipping a coin
+function flipCoin() {
+    // Generate a random number between 0 and 1
+    const randomValue = Math.random();
+
+    // Use the random value to determine the result
+    if (randomValue < 0.5) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
