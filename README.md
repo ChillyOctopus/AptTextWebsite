@@ -845,7 +845,7 @@ Copy code
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- JavaScript code can be included in the <head> or <body> section -->
+    // JavaScript code can be included in the <head> or <body> section
     <script type="text/javascript">
         // Your JavaScript code goes here
     </script>
