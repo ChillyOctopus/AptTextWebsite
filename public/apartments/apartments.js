@@ -40,7 +40,7 @@ function addListing() {
     let decreaseTimer;
     const timeGapOfRepeatedIncreases = 75;
 
-    // Add an event listener to the new "Delete" button
+    // Add an event listener to the new "Delete" button (one click)
     const deleteButton = newRow.querySelector(".delete-button");
     deleteButton.addEventListener("click", function () {
         deleteListing(newRow);
@@ -130,15 +130,13 @@ function checkAddListingEnabled() {
     const price = document.getElementById("price").value;
     const available = document.getElementById("available").value;
 
-    if (
+    addButton.disabled = ( ! (
         (type === "Private" || type === "Shared") &&
         (gender === "M" || gender === "F" || gender === "N/A") &&
         flatmates > 0 &&
         price > 0 &&
         available > 0
-    ) {
-        addButton.disabled = false;
-    } else {
-        addButton.disabled = true;
-    }
+    ));
+
+
 }
