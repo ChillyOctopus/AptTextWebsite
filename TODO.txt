@@ -16,3 +16,6 @@ In Maintenance:
     -  decide on a location for a clearAll button if wanted
     -  maybe decide if stars / text need to be bigger
     -  
+
+In index.js:
+    - make Chat endpoints functional.
