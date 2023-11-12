@@ -1,3 +1,13 @@
+const { json } = require("body-parser");
+
+async function loadData(){
+  const response = await fetch('/api/data');
+  dataArray = await response.json();
+  document.getElementById("textsSent").textContent = dataArray.textsSent;
+  document.getElementById("textsRecieved").textContent = dataArray.textsRecieved;
+  document.getElementById("phoneNum").textContent = dataArray.phoneNum;
+}
+
 function clearForm(){
     const numberForm = document.getElementById("number");
     numberForm.clearForm;
@@ -33,3 +43,17 @@ function checkInputValidity(inputField) {
       blockButton.disabled = true;
   }
 }
+
+async function blockNumber(){
+  const number = document.getElementById("number");
+  
+  const response = await fetch('/api/data', {
+  method: POST,
+  headers: {'content-type': 'application/json'},
+  body: JSON.stringify(number),
+  });
+
+  clearForm();
+}
+
+loadData();

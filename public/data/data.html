@@ -45,19 +45,15 @@
               <tr></tr> <!--to alternate the stripes the way we want-->
               <tr style="height: 65px;">
                 <td style="vertical-align: middle;">Texts sent</td>
-                <td style="vertical-align: middle;">(From database)</td>
+                <td id="textsSent" vertical-align: middle;>(From database)</td>
               </tr>
               <tr style="height: 65px;">
                 <td style="vertical-align: middle;">Texts received</td>
-                <td style="vertical-align: middle;">(From database)</td>
+                <td id="textsRecieved" style="vertical-align: middle;">(From database)</td>
               </tr>
               <tr style="height: 65px;">
                 <td style="vertical-align: middle;">Phone numbers on file</td>
-                <td style="vertical-align: middle;">(From database)</td>
-              </tr>
-              <tr style="height: 65px;">
-                <td style="vertical-align: middle;">Phone numbers ever seen</td>
-                <td style="vertical-align: middle;">(From database)</td>
+                <td id="phoneNum" style="vertical-align: middle;">(From database)</td>
               </tr>
             </table>
           </div>
@@ -74,7 +70,7 @@
           </div>
 
           <div class="row" style="justify-content: center; margin-top: 40px; margin-bottom: 50px;">
-            <button type="button" id="blockButton" class="btn btn-info btn-lg" onclick="clearForm()" disabled="true">
+            <button type="button" id="blockButton" class="btn btn-info btn-lg" onclick="blockNumber()" disabled="true">
               Block
             </button>
           </div>

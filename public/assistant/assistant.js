@@ -70,7 +70,6 @@ function scrollChatToBottom() {
   fullChatCard.scrollTop = fullChatCard.scrollHeight;
 }
 
-
 function createUserChatBubble(message) {
   const chatBubble = document.createElement('div');
   chatBubble.className = 'd-flex flex-row justify-content-end mb-4';
@@ -131,3 +130,5 @@ function flipCoin() {
         return 0;
     }
 }
+
+loadChat();
