@@ -1,16 +1,18 @@
 async function loadMaintenance(){
-
+  const response = await fetch('/maintenance');
+  requests = await response.json();
 }
 
 async function loadData(){
 
   const rUserUrl = "https://randomuser.me/api/";
-  const randomUser = await fetch(rUserUrl).then((x) => x.json());  
+  const quoteUrl = "https://api.quotable.io/random";
+  const randomUser = await fetch(rUserUrl).then((x) => x.json()).then((data) => data.results[0]);  
 
-  const name = randomUser.first + " " + randomUser.last;
+  const name = randomUser.name.first + " " + randomUser.name.last;
   const aptNum = Math.floor(Math.random() * (1000 - 0) + 0);
-  const phoneNum = randomUser.number;
-  const issue = await fetch(quoteUrl).then((x) => x.json()).then((data) => {data.content + " " + data.author;});
+  const phoneNum = randomUser.cell;
+  const issue = await fetch(quoteUrl).then((x) => x.json()).then((data) => data.content);
   const date = getRandomDateFormatted();
   const important = false;
 
@@ -60,8 +62,8 @@ async function addMaintenance(name, aptNum, phoneNum, issue, date, important) {
   });
 
   sortTable(); // Sort the table after adding the new row
-  const response = await fetch('/api/maintenance', {
-    method: 'post',
+  const response = await fetch('/maintenance', {
+    method: 'POST',
     headers: {'content-type': 'application/json'},
     body: JSON.stringify
   });

@@ -15,7 +15,6 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
-
 // GetApartments
 apiRouter.get('/apartments', (_req, res) => {
     res.send(JSON.stringify(apartments));
@@ -51,14 +50,13 @@ apiRouter.post('/settings', (req, res) => {
     
 // GetChat
 apiRouter.get('/chat', (_req, res) => {
-    if(chat.length > 50) chat.length = 50;
-    res.send(JSON.stringify(chat));
+   res.send(JSON.stringify(chat));
 });
 
 // UpdateChat
 apiRouter.post('/chat', (req, res) => {
     updateChat(req.body);
-    res.send(JSON.stringify(chat));
+    res.send(JSON.stringify("Updated"));
 });
     
 // GetData
@@ -140,27 +138,13 @@ function updateMaintenance(_maintenance){
 function updateSettings(_settings){
     //So far types are "contact" and "website". We may update them in the future
     // so we are allowing flexibility now.
-    settings = [];
-    _settings.forEach((obj) => {
-        const type = obj.type;
-        const value = obj.value;
-        let setting = {"type": type, "value": value};
-        settings.push(setting);
-    });
-
+    settings = _settings;
     return settings;
 }
 
 function updateChat(_chat){
     //This represents sending a chat
-    chat = [];
-    _chat.forEach((obj) => {
-        const speaker = obj.speaker;
-        const message = obj.message;
-        let chatSnippet = {"speaker": speaker, "message": message};
-        chat.push(chatSnippet);
-    });
-
+    chat.push(_chat);
     if(chat.length > 50) chat.length = 50;
     return chat;
 }
@@ -183,6 +167,8 @@ function sendMessage(_message){
 }
 
 
+
+/*
 
 // Example code:
 // SubmitScore
@@ -214,3 +200,5 @@ function updateScores(newScore, scores) {
 
   return scores;
 }
+
+*/

@@ -9,18 +9,17 @@ async function loadChat(){
 }
 
 function displayChat(chat){
-  chat.forEach((obj) => {
+  for(const obj of chat){
     if(obj.speaker === "ai"){
-      createAIChatBubble(obj.message);
+      addBubble(createAIChatBubble(obj.message));
     } else {
-      createUserChatBubble(obj.message);
+      addBubble(createUserChatBubble(obj.message));
     }
-  });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   const textArea = document.getElementById('textAreaExample');
-  const chatBody = document.getElementById('chat1');
 
   textArea.addEventListener('keydown', async function(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -38,22 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
           const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: {"speaker":"user", "message":message},
+            body: JSON.stringify({"speaker":"user", "message":message}),
           });
 
-          const chatBubble = createUserChatBubble(message);
-          chatBody.appendChild(chatBubble);
-          
+          addBubble(createUserChatBubble(message));
+
         } else {
 
           const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: {"speaker":"ai", "message":message},
+            body: JSON.stringify({"speaker":"ai", "message":message}),
           });
           
-          const chatBubble = createAIChatBubble(message);
-          chatBody.appendChild(chatBubble);
+          addBubble(createAIChatBubble(message));
         }
 
         // Clear the textarea
@@ -115,6 +112,12 @@ function createAIChatBubble(message){
   chatBubble.appendChild(AIAvatar);
   chatBubble.appendChild(chatMessage);
 
+  return chatBubble;
+}
+
+function addBubble(chatBubble){
+  const chatBody = document.getElementById('chat1');
+  chatBody.appendChild(chatBubble);
   return chatBubble;
 }
 

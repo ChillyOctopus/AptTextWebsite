@@ -1,5 +1,14 @@
 async function loadOutbound(){
+    const response = await fetch('/api/settings');
+    const responseJson = await response.json();
 
+    for(const obj of responseJson){
+        if(obj.type === 'contact'){
+            document.getElementById("contact").setAttribute("Placeholder", obj.value);
+        } else {
+            document.getElementById("website").setAttribute("Placeholder", obj.value);
+        }
+    }
 }
 
 function enableSave() {
@@ -28,14 +37,11 @@ function enableSend() {
 async function send(){
     const massMessageInput = document.getElementById("massMessage");
 
-    const response = await fetch('/text', {
+    const response = await fetch('/text/'+massMessageInput.textContent, {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: massMessageInput.textContent
     });
 
     massMessageInput.value = "";
-    massMessageInput.ariaPlaceholder = response.body;
     showToast("Sent to all numbers!");
     document.getElementById("sendButton").disabled = true;
 }
@@ -43,9 +49,9 @@ async function send(){
 async function save(){
     const contactInput = document.getElementById("contact");
     const websiteInput = document.getElementById("website");
-
-    let contact = {"type": "contact", "value": contactInput.textContent};
-    let website = {"type": "website", "value": websiteInput.textContent};
+ 
+    let contact = {"type": "contact", "value": contactInput.value};
+    let website = {"type": "website", "value": websiteInput.value};
 
     const response = await fetch('/api/settings', {
         method: 'POST',
@@ -53,11 +59,17 @@ async function save(){
         body: JSON.stringify([contact, website])
     });
 
-    contactInput.value = "";
-    contactInput.ariaPlaceholder = response.body["contact"];
-    websiteInput.value = "";
-    websiteInput.ariaPlaceholder = response.body["website"];
-
+    const responseJson = await response.json();
+    for(const obj of responseJson){
+        if(obj.type === 'contact'){
+            contactInput.value = "";
+            document.getElementById("contact").setAttribute("Placeholder", obj.value);
+        } else {
+            websiteInput.value = "";
+            document.getElementById("website").setAttribute("Placeholder", obj.value);
+        }
+    }
+    
     showToast("Saved your information!");
     document.getElementById("saveButton").disabled = true;
 }
@@ -78,3 +90,5 @@ function showToast(message, duration = 1500) {
       toastContainer.removeChild(toast);
     }, duration + 500);
 }
+
+loadOutbound();
