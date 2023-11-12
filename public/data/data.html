@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
+    <link rel="stylesheet" href="data.css">
     <meta charset="UTF-8" />
     <!-- Tell browsers not to scale the viewport automatically -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -35,7 +36,7 @@
           <div class="row" style="justify-content: center;">
             <h2 style="margin-top: 20px; margin-bottom: 60px;">Stats for (User)</h2>
             <div class="col-xl-12"></div> <!--To make our spacing correct-->
-            <table class="table table-striped w-75" style="text-align: center;">
+            <table class="table table-striped w-50" style="text-align: center;">
               <thead class="table-secondary">
                 <tr>
                   <th scope="col">Data Type</th>
@@ -44,16 +45,16 @@
               </thead>
               <tr></tr> <!--to alternate the stripes the way we want-->
               <tr style="height: 65px;">
-                <td style="vertical-align: middle;">Texts sent</td>
-                <td id="textsSent" vertical-align: middle;>(From database)</td>
+                <td>Texts sent</td>
+                <td id="textsSent">(From database)</td>
               </tr>
               <tr style="height: 65px;">
-                <td style="vertical-align: middle;">Texts received</td>
-                <td id="textsRecieved" style="vertical-align: middle;">(From database)</td>
+                <td>Texts received</td>
+                <td id="textsRecieved">(From database)</td>
               </tr>
-              <tr style="height: 65px;">
-                <td style="vertical-align: middle;">Phone numbers on file</td>
-                <td id="phoneNum" style="vertical-align: middle;">(From database)</td>
+              <tr>
+                <td>Phone numbers on file</td>
+                <td id="phoneNum">(From database)</td>
               </tr>
             </table>
           </div>

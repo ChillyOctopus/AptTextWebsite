@@ -1,4 +1,5 @@
 const express = require('express');
+const { Z_FULL_FLUSH } = require('zlib');
 const app = express();
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -97,7 +98,7 @@ let lastMessage = "";
 let login = [];
 let apartments = [];
 let chat = [];
-let data = {"textsSent": 35202, "textsRecieved": 30126, "phoneNum": 1021};
+let data = {"textsSent": getRandNum(), "textsRecieved": getRandNum(), "phoneNum": getRandNum()};
 let maintenance = [];
 let settings = [];
 let blockedNumbers = [];
@@ -167,6 +168,11 @@ function sendMessage(_message){
 }
 
 
+
+function getRandNum(){
+
+  return Math.floor(Math.random() * (100000 - 500) + 500);
+}
 
 /*
 

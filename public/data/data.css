@@ -5,13 +5,20 @@
     z-index: 1000;
   }
   
-  .toast {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin: 5px;
-    display: none;
-    transition: opacity 0.5s;
-  }
-  
+.toast {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 5px;
+  display: none;
+  transition: opacity 0.5s;
+}
+
+.table td, .table th, .table tr {
+  width: 50%;
+  vertical-align: middle;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}

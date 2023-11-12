@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 
 async function loadData(){
   const response = await fetch('/api/data');
@@ -46,13 +45,12 @@ function checkInputValidity(inputField) {
 
 async function blockNumber(){
   const number = document.getElementById("number");
-  
   const response = await fetch('/api/data', {
-  method: POST,
-  headers: {'content-type': 'application/json'},
-  body: JSON.stringify(number),
+    method: 'POST',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify(number),
   });
-
+  document.getElementById("blockButton").disabled = true;
   clearForm();
 }
 
