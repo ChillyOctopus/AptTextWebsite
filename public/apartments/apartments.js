@@ -1,5 +1,4 @@
 async function loadApartments(){
-  let apartments = [];
 
   // Get the apartments from the service
   const response = await fetch('/api/apartments');
@@ -9,8 +8,8 @@ async function loadApartments(){
 }
 
 function displayApartments(apartments){
-    apartments.forEach(({ type, gender, flatmates, price, available }) => {
-        addListing(type, gender, flatmates, price, available);
+    apartments.forEach((row) => {
+        addListing(row.type, row.gender, row.flatmates, row.price, row.available);
     });
 }
 
@@ -22,15 +21,7 @@ async function submitListingFromForm(){
   const price = document.getElementById("price").value;
   const available = document.getElementById("available").value;
 
-  let apt = {type, gender, flatmates, price, available};
-
-  const response = await fetch('/api/apartments', {
-    method: 'POST',
-    headers: {'content-type': 'application/json'},
-    body: JSON.stringify(apt),
-  });
-
-  displayApartments(response.body)
+  addListing(type, gender, flatmates, price, available);
 }
 
 function addListing(type, gender, flatmates, price, available) {
@@ -145,9 +136,15 @@ function enableSave(){
     button.disabled = false;
 }
 
-function save(){
+async function save(){
     const button = document.getElementById("saveButton");
     button.disabled = true;
+    var table = getAllApartments();
+    await fetch('/api/apartments', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify(table),
+    });
 }
 
 function checkAddListingEnabled() {
@@ -165,8 +162,21 @@ function checkAddListingEnabled() {
         price > 0 &&
         available > 0
     ));
+}
 
+function getAllApartments(){
+    let rows = document.getElementById("listingTable").rows;
+    let returnMe = [];
+    for(let i = 2; i < rows.length; i++){
+        returnMe.push(
+            {"type":rows[i].cells[0].innerHTML,
+             "gender":rows[i].cells[1].innerHTML,
+             "flatmates":rows[i].cells[2].innerHTML,
+             "price":rows[i].cells[3].innerHTML,
+             "available":rows[i].cells[4].innerHTML});
+    }
 
+    return returnMe;
 }
 
 loadApartments();

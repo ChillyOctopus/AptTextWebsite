@@ -106,17 +106,7 @@ let blockedNumbers = [];
 
 
 function updateApartments(_apartments){
-    apartments = [];
-    _apartments.forEach((obj) => {
-        const type = obj.type;
-        const gender = obj.gender;
-        const flatmates = obj.flatmates;
-        const price = obj.price;
-        const available = obj.available;
-        let apt = {"type": type, "gender": gender, "flatmates": flatmates, "price": price, "available": available};
-        apartments.push(apt);
-    });
-      
+    apartments = _apartments;
     return apartments;
 }
 
