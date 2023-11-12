@@ -30,7 +30,7 @@ async function submitListingFromForm(){
     body: JSON.stringify(apt),
   });
 
-  addListing(...apt);
+  displayApartments(response.body)
 }
 
 function addListing(type, gender, flatmates, price, available) {
