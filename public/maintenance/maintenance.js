@@ -1,22 +1,19 @@
-async function loadMaintenance(){
-  const response = await fetch('/maintenance');
-  requests = await response.json();
-}
-
 async function loadData(){
 
-  const rUserUrl = "https://randomuser.me/api/";
-  const quoteUrl = "https://api.quotable.io/random";
-  const randomUser = await fetch(rUserUrl).then((x) => x.json()).then((data) => data.results[0]);  
-
-  const name = randomUser.name.first + " " + randomUser.name.last;
-  const aptNum = Math.floor(Math.random() * (1000 - 0) + 0);
-  const phoneNum = randomUser.cell;
-  const issue = await fetch(quoteUrl).then((x) => x.json()).then((data) => data.content);
-  const date = getRandomDateFormatted();
-  const important = false;
-
-  addMaintenance(name, aptNum, phoneNum, issue, date, important);
+  for(let i = 0; i < randNum(); i++){
+    const rUserUrl = "https://randomuser.me/api/";
+    const quoteUrl = "https://api.quotable.io/random";
+    const randomUser = await fetch(rUserUrl).then((x) => x.json()).then((data) => data.results[0]);  
+  
+    const name = randomUser.name.first + " " + randomUser.name.last;
+    const aptNum = Math.floor(Math.random() * (1000 - 0) + 0);
+    const phoneNum = randomUser.cell;
+    const issue = await fetch(quoteUrl).then((x) => x.json()).then((data) => data.content);
+    const date = getRandomDateFormatted();
+    const important = false;
+  
+    addMaintenance(name, aptNum, phoneNum, issue, date, important);
+  }
 }
 
 // Function to add a new row to the table
@@ -150,4 +147,8 @@ function getRandomDateFormatted() {
   return `${month}/${day}/${year}`;
 }
 
-loadMaintenance();
+function randNum(){
+  return Math.floor(Math.random() * (12 - 2) + 2);
+}
+
+loadData();
