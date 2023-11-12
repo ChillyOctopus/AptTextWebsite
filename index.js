@@ -17,7 +17,7 @@ app.use(`/api`, apiRouter);
 
 
 // GetApartments
-apiRouter.get('/apartments', (req, res) => {
+apiRouter.get('/apartments', (_req, res) => {
     res.send(JSON.stringify(apartments));
 });
 
@@ -28,7 +28,7 @@ apiRouter.post('/apartments', (req, res) => {
 });
     
 // GetMaintenance
-apiRouter.get('/maintenance', (req, res) => {
+apiRouter.get('/maintenance', (_req, res) => {
     res.send(JSON.stringify(maintenance));
 });
 
@@ -37,9 +37,9 @@ apiRouter.post('/maintenance', (req, res) => {
     updateMaintenance(req.body);
     res.send(JSON.stringify(maintenance));
 });
-    
+
 // GetSettings
-apiRouter.get('/settings', (req, res) => {
+apiRouter.get('/settings', (_req, res) => {
     res.send(JSON.stringify(settings));
 });
 
@@ -50,7 +50,7 @@ apiRouter.post('/settings', (req, res) => {
 });
     
 // GetChat
-apiRouter.get('/chat', (req, res) => {
+apiRouter.get('/chat', (_req, res) => {
     if(chat.length > 50) chat.length = 50;
     res.send(JSON.stringify(chat));
 });
@@ -62,7 +62,7 @@ apiRouter.post('/chat', (req, res) => {
 });
     
 // GetData
-apiRouter.get('/data', (req, res) => {
+apiRouter.get('/data', (_req, res) => {
     res.send(JSON.stringify(data));
 });
 

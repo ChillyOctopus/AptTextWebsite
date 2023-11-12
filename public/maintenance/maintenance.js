@@ -2,15 +2,15 @@ async function loadMaintenance(){
 
 }
 
-async function loadFormData(){
+async function loadData(){
 
   const rUserUrl = "https://randomuser.me/api/";
-  const randomUser = await fetch(rUserUrl).then((x) => x.json()).then((response) => {JSON.stringify(response,["first","last","number"]);});  
+  const randomUser = await fetch(rUserUrl).then((x) => x.json());  
 
   const name = randomUser.first + " " + randomUser.last;
   const aptNum = Math.floor(Math.random() * (1000 - 0) + 0);
   const phoneNum = randomUser.number;
-  const issue = await fetch(quoteUrl).then((x) => x.json()).then((response) => {JSON.stringify(response, ["content","author"]);});
+  const issue = await fetch(quoteUrl).then((x) => x.json()).then((data) => {data.content + " " + data.author;});
   const date = getRandomDateFormatted();
   const important = false;
 
@@ -61,7 +61,7 @@ async function addMaintenance(name, aptNum, phoneNum, issue, date, important) {
 
   sortTable(); // Sort the table after adding the new row
   const response = await fetch('/api/maintenance', {
-    method: 'POST',
+    method: 'post',
     headers: {'content-type': 'application/json'},
     body: JSON.stringify
   });
