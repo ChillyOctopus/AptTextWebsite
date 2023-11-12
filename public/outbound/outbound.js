@@ -1,3 +1,7 @@
+async function loadOutbound(){
+
+}
+
 function enableSave() {
     const contactInput = document.getElementById("contact");
     const websiteInput = document.getElementById("website");
@@ -21,21 +25,41 @@ function enableSend() {
     }
 }
 
-function send(){
+async function send(){
     const massMessageInput = document.getElementById("massMessage");
+
+    const response = await fetch('/text', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: massMessageInput.textContent
+    });
+
     massMessageInput.value = "";
+    massMessageInput.ariaPlaceholder = response.body;
     showToast("Sent to all numbers!");
     document.getElementById("sendButton").disabled = true;
 }
 
-function save(){
+async function save(){
     const contactInput = document.getElementById("contact");
     const websiteInput = document.getElementById("website");
+
+    let contact = {"type": "contact", "value": contactInput.textContent};
+    let website = {"type": "website", "value": websiteInput.textContent};
+
+    const response = await fetch('/api/settings', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify([contact, website])
+    });
+
     contactInput.value = "";
+    contactInput.ariaPlaceholder = response.body["contact"];
     websiteInput.value = "";
+    websiteInput.ariaPlaceholder = response.body["website"];
+
     showToast("Saved your information!");
     document.getElementById("saveButton").disabled = true;
-
 }
 
 function showToast(message, duration = 1500) {

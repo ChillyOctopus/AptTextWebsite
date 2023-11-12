@@ -1,5 +1,3 @@
-const { log } = require('console');
-const { setEngine } = require('crypto');
 const express = require('express');
 const app = express();
 
@@ -82,7 +80,7 @@ apiRouter.post('/login', (req, res) => {
 
 // Text
 apiRouter.post('/text/:message', (req, res) => {
-    lastMessage = req.body;
+    sendMessage(req.params.message);
     res.send(lastMessage);
 });
 
@@ -179,10 +177,14 @@ function updateLogin(_login){
     return login;
 }
 
+function sendMessage(_message){
+    lastMessage = _message;
+    return lastMessage;
+}
+
 
 
 // Example code:
-
 // SubmitScore
 apiRouter.post('/score', (req, res) => {
     scores = updateScores(req.body, scores);
