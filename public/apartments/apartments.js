@@ -1,15 +1,43 @@
-function addListing() {
-  enableSave();
-  document.getElementById("addListingButton").disabled = true;
-  const table = document.getElementById("listingTable");
-  const form = document.getElementById("addListingForm");
+async function loadApartments(){
+  let apartments = [];
 
+  // Get the apartments from the service
+  const response = await fetch('/api/apartments');
+  apartments = await response.json();
+
+  displayApartments(apartments);
+}
+
+function displayApartments(apartments){
+    apartments.forEach(({ type, gender, flatmates, price, available }) => {
+        addListing(type, gender, flatmates, price, available);
+    });
+}
+
+async function submitListingFromForm(){
   // Get the values from the form
   const type = document.getElementById("type").value;
   const gender = document.getElementById("gender").value;
   const flatmates = document.getElementById("flatmates").value;
   const price = document.getElementById("price").value;
   const available = document.getElementById("available").value;
+
+  let apt = {type, gender, flatmates, price, available};
+
+  const response = await fetch('/api/apartments', {
+    method: 'POST',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify(apt),
+  });
+
+  addListing(...apt);
+}
+
+function addListing(type, gender, flatmates, price, available) {
+  enableSave();
+  document.getElementById("addListingButton").disabled = true;
+  const table = document.getElementById("listingTable");
+  const form = document.getElementById("addListingForm");
 
   // Create a new table row and populate it with the form values
   const newRow = table.insertRow(2); // 2 places the new row right under the first header row (which is empty to let zebra stripes alternate how we want)
@@ -140,3 +168,5 @@ function checkAddListingEnabled() {
 
 
 }
+
+loadApartments();
