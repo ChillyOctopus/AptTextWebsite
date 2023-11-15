@@ -1,5 +1,4 @@
 const express = require('express');
-const { Z_FULL_FLUSH } = require('zlib');
 const app = express();
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -26,7 +25,7 @@ apiRouter.post('/apartments', (req, res) => {
     updateApartments(req.body);
     res.send(JSON.stringify(apartments));
 });
-    
+
 // GetMaintenance
 apiRouter.get('/maintenance', (_req, res) => {
     res.send(JSON.stringify(maintenance));
@@ -48,7 +47,7 @@ apiRouter.post('/settings', (req, res) => {
     updateSettings(req.body);
     res.send(JSON.stringify(settings));
 });
-    
+
 // GetChat
 apiRouter.get('/chat', (_req, res) => {
    res.send(JSON.stringify(chat));
@@ -59,7 +58,7 @@ apiRouter.post('/chat', (req, res) => {
     updateChat(req.body);
     res.send(JSON.stringify("Updated"));
 });
-    
+
 // GetData
 apiRouter.get('/data', (_req, res) => {
     res.send(JSON.stringify(data));
@@ -160,7 +159,6 @@ function sendMessage(_message){
 
 
 function getRandNum(){
-
   return Math.floor(Math.random() * (100000 - 500) + 500);
 }
 
@@ -172,7 +170,7 @@ apiRouter.post('/score', (req, res) => {
     scores = updateScores(req.body, scores);
     res.send(scores);
   });
-  
+
 // updateScores considers a new score for inclusion in the high scores.
 // The high scores are saved in memory and disappear whenever the service is restarted.
 let scores = [];
