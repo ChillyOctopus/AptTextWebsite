@@ -18,14 +18,14 @@ async function submitListingFromForm(){
   const type = document.getElementById("type").value;
   const gender = document.getElementById("gender").value;
   const flatmates = document.getElementById("flatmates").value;
-  const price = document.getElementById("price").value;
+  const price = document.getElementById("price").value + '$';
   const available = document.getElementById("available").value;
 
+  enableSave();
   addListing(type, gender, flatmates, price, available);
 }
 
 function addListing(type, gender, flatmates, price, available) {
-  enableSave();
   document.getElementById("addListingButton").disabled = true;
   const table = document.getElementById("listingTable");
   const form = document.getElementById("addListingForm");
@@ -36,7 +36,7 @@ function addListing(type, gender, flatmates, price, available) {
     <td>${type}</td>
     <td>${gender}</td>
     <td>${flatmates}</td>
-    <td>${price}$</td>
+    <td>${price}</td>
     <td>${available}</td>
     <td>
         <div class="btn-group-vertical" role="group" aria-label="modify">

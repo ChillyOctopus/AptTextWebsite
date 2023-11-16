@@ -26,35 +26,42 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
+
 // GetApartments
-apiRouter.get('/apartments', (_req, res) => {
-    res.send(JSON.stringify(apartments));
+apiRouter.get('/apartments', async (_req, res) => {
+    res.send(await allFromCollection('apartments'));
 });
 
 // UpdateApartments
-apiRouter.post('/apartments', (req, res) => {
-    updateApartments(req.body);
-    res.send(JSON.stringify(apartments));
+apiRouter.post('/apartments', async (req, res) => {
+    try{
+        const result = await updateApartments(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // GetMaintenance
-apiRouter.get('/maintenance', (_req, res) => {
-    res.send(JSON.stringify(maintenance));
+apiRouter.get('/maintenance', async (_req, res) => {
+    res.send(await allFromCollection('maintenance'));
 });
 
 // UpdateMaintenance
-apiRouter.post('/maintenance', (req, res) => {
-    updateMaintenance(req.body);
-    res.send(JSON.stringify(maintenance));
+apiRouter.post('/maintenance', async (req, res) => {
+    try{
+        const result = await updateMaintenance(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // GetSettings
 apiRouter.get('/settings', async (_req, res) => {
-    const client = new MongoClient(urlString);
-    const db = client.db(testUsername);
-    const collection = db.collection('settings');
-    await client.connect();
-    res.send(JSON.stringify(await collection.find().toArray()));
+    res.send(await allFromCollection('settings'));
 });
 
 // UpdateSettings
@@ -67,8 +74,6 @@ apiRouter.post('/settings', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 
 // GetChat
 apiRouter.get('/chat', (_req, res) => {
@@ -117,56 +122,22 @@ app.listen(port, () => {
 
 let lastMessage = "";
 let login = [];
-let apartments = [];
 let chat = [];
 let data = {"textsSent": getRandNum(), "textsRecieved": getRandNum(), "phoneNum": getRandNum()};
-let maintenance = [];
-let settings = [];
 let blockedNumbers = [];
 
 
 
-function updateApartments(_apartments){
-    apartments = _apartments;
-    return apartments;
+async function updateApartments(_apartments){
+    return resetDumpArrayIntoCollection(_apartments, 'apartments');
 }
 
-function updateMaintenance(_maintenance){
-    maintenance = [];
-    _maintenance.forEach((obj) => {
-        const name = obj.name;
-        const aptNum = obj.aptNum;
-        const phoneNum = obj.phoneNum;
-        const issue = obj.issue;
-        const date = obj.date;
-        const important = obj.important;
-        let maintReq = {"name": name, "aptNum": aptNum, "phoneNum": phoneNum, "issue": issue, "date": date, "important": important};
-        maintenance.push(maintReq);
-    });
-
-    return maintenance;
+async function updateMaintenance(_maintenance){
+    return resetDumpArrayIntoCollection(_maintenance, 'maintenance');
 }
 
 async function updateSettings(_settings) {
-    const client = new MongoClient(urlString);
-    try {
-        const db = client.db(testUsername);
-        const collection = db.collection('settings');
-
-        await client.connect();
-
-        await collection.deleteMany();
-        for (const obj of _settings) {
-            await collection.insertOne(obj);
-        }
-        const response = await collection.find().toArray();
-        return response;
-
-    } catch (error) {
-        throw error;
-    } finally {
-        await client.close();
-    }
+    return resetDumpArrayIntoCollection(_settings, 'settings');
 }
 
 function updateChat(_chat){
@@ -191,6 +162,38 @@ function updateLogin(_login){
 function sendMessage(_message){
     lastMessage = _message;
     return lastMessage;
+}
+
+
+
+async function allFromCollection(collectionName){
+    const client = new MongoClient(urlString);
+    const db = client.db(testUsername);
+    const collection = db.collection(collectionName);
+    await client.connect();
+    return JSON.stringify(await collection.find().toArray());
+}
+
+async function resetDumpArrayIntoCollection(myData, collectionName){
+    const client = new MongoClient(urlString);
+    try {
+        const db = client.db(testUsername);
+        const collection = db.collection(collectionName);
+
+        await client.connect();
+
+        await collection.deleteMany();
+        for (const obj of myData) {
+            await collection.insertOne(obj);
+        }
+        const response = await collection.find().toArray();
+        return response;
+
+    } catch (error) {
+        throw error;
+    } finally {
+        await client.close();
+    }
 }
 
 
