@@ -1,4 +1,4 @@
-For what the javascript deliverable has changed, please see commit comments and history.
+For what the database deliverable has changed, please see commit comments and history.
 
 The code for the startup website - HTML, CSS, ect. This repo contains all of that information and code.
 

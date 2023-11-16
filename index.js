@@ -1,5 +1,16 @@
 const express = require('express');
+const { MongoClient } = require('mongodb');
+const mongoConfig = require('./dbConfig.json');
+
 const app = express();
+const testUsername = 'MickyMouse';
+
+//Getting our database set up.
+const mongoUsername = mongoConfig.username;
+const mongoPassword = mongoConfig.password;
+const mongoHostname = mongoConfig.hostname;
+const urlString = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoHostname}/?retryWrites=true&w=majority`;
+
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -38,15 +49,26 @@ apiRouter.post('/maintenance', (req, res) => {
 });
 
 // GetSettings
-apiRouter.get('/settings', (_req, res) => {
-    res.send(JSON.stringify(settings));
+apiRouter.get('/settings', async (_req, res) => {
+    const client = new MongoClient(urlString);
+    const db = client.db(testUsername);
+    const collection = db.collection('settings');
+    await client.connect();
+    res.send(JSON.stringify(await collection.find().toArray()));
 });
 
 // UpdateSettings
-apiRouter.post('/settings', (req, res) => {
-    updateSettings(req.body);
-    res.send(JSON.stringify(settings));
+apiRouter.post('/settings', async (req, res) => {
+    try {
+        const result = await updateSettings(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
+
 
 // GetChat
 apiRouter.get('/chat', (_req, res) => {
@@ -125,11 +147,26 @@ function updateMaintenance(_maintenance){
     return maintenance;
 }
 
-function updateSettings(_settings){
-    //So far types are "contact" and "website". We may update them in the future
-    // so we are allowing flexibility now.
-    settings = _settings;
-    return settings;
+async function updateSettings(_settings) {
+    const client = new MongoClient(urlString);
+    try {
+        const db = client.db(testUsername);
+        const collection = db.collection('settings');
+
+        await client.connect();
+
+        await collection.deleteMany();
+        for (const obj of _settings) {
+            await collection.insertOne(obj);
+        }
+        const response = await collection.find().toArray();
+        return response;
+
+    } catch (error) {
+        throw error;
+    } finally {
+        await client.close();
+    }
 }
 
 function updateChat(_chat){

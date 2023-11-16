@@ -60,7 +60,7 @@ async function save(){
     });
 
     const responseJson = await response.json();
-    for(const obj of responseJson){
+    responseJson.forEach(obj =>{
         if(obj.type === 'contact'){
             contactInput.value = "";
             document.getElementById("contact").setAttribute("Placeholder", obj.value);
@@ -68,7 +68,7 @@ async function save(){
             websiteInput.value = "";
             document.getElementById("website").setAttribute("Placeholder", obj.value);
         }
-    }
+    });
     
     showToast("Saved your information!");
     document.getElementById("saveButton").disabled = true;
