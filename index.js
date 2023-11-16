@@ -76,14 +76,19 @@ apiRouter.post('/settings', async (req, res) => {
 });
 
 // GetChat
-apiRouter.get('/chat', (_req, res) => {
-   res.send(JSON.stringify(chat));
+apiRouter.get('/chat', async (_req, res) => {
+    res.send(await allFromCollection('chat'));
 });
 
 // UpdateChat
-apiRouter.post('/chat', (req, res) => {
-    updateChat(req.body);
-    res.send(JSON.stringify("Updated"));
+apiRouter.post('/chat', async (req, res) => {
+    try {
+        const result = await updateChat(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // GetData
@@ -129,22 +134,19 @@ let blockedNumbers = [];
 
 
 async function updateApartments(_apartments){
-    return resetDumpArrayIntoCollection(_apartments, 'apartments');
+    return setCollection(_apartments, 'apartments');
 }
 
 async function updateMaintenance(_maintenance){
-    return resetDumpArrayIntoCollection(_maintenance, 'maintenance');
+    return setCollection(_maintenance, 'maintenance');
 }
 
 async function updateSettings(_settings) {
-    return resetDumpArrayIntoCollection(_settings, 'settings');
+    return setCollection(_settings, 'settings');
 }
 
-function updateChat(_chat){
-    //This represents sending a chat
-    chat.push(_chat);
-    if(chat.length > 50) chat.length = 50;
-    return chat;
+async function updateChat(_chat){
+    return insertOneIntoCollection(_chat, 'chat');
 }
 
 function updateData(_data){
@@ -174,7 +176,7 @@ async function allFromCollection(collectionName){
     return JSON.stringify(await collection.find().toArray());
 }
 
-async function resetDumpArrayIntoCollection(myData, collectionName){
+async function setCollection(myData, collectionName){
     const client = new MongoClient(urlString);
     try {
         const db = client.db(testUsername);
@@ -182,7 +184,8 @@ async function resetDumpArrayIntoCollection(myData, collectionName){
 
         await client.connect();
 
-        await collection.deleteMany();
+        await clearCollection(collection);
+        
         for (const obj of myData) {
             await collection.insertOne(obj);
         }
@@ -193,6 +196,33 @@ async function resetDumpArrayIntoCollection(myData, collectionName){
         throw error;
     } finally {
         await client.close();
+    }
+}
+
+async function insertOneIntoCollection(myData, collectionName){
+    const client = new MongoClient(urlString);
+    try {
+        const db = client.db(testUsername);
+        const collection = db.collection(collectionName);
+
+        await client.connect();
+        await collection.insertOne(myData);
+        
+        const response = await collection.find().toArray();
+        return response;
+
+    } catch (error) {
+        throw error;
+    } finally {
+        await client.close();
+    }
+}
+
+async function clearCollection(collection){
+    try {
+        await collection.deleteMany();
+    } catch (error) {
+        throw error;
     }
 }
 
