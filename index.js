@@ -188,8 +188,8 @@ async function setCollection(myData, collectionName){
         await clearCollection(collection);
 
         for (const obj of myData) {
-            console.log("Insertion array: "+JSON.stringify(myData));
-            console.log("Data we are inserting: "+JSON.stringify(obj));
+            //console.log("Insertion array: "+JSON.stringify(myData));
+            //console.log("Data we are inserting: "+JSON.stringify(obj));
             await collection.insertOne(obj);
         }
         const response = await collection.find().toArray();
