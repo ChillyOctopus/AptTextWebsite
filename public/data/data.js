@@ -2,9 +2,12 @@
 async function loadData(){
   const response = await fetch('/api/data');
   dataArray = await response.json();
-  document.getElementById("textsSent").textContent = dataArray.textsSent;
-  document.getElementById("textsRecieved").textContent = dataArray.textsRecieved;
-  document.getElementById("phoneNum").textContent = dataArray.phoneNum;
+
+  for(const obj of dataArray){
+    //Note: the ids of the elements we are setting the values to are the exact same as the "type" name we put into the database, so this works.
+    const field = document.getElementById(obj.type);
+    field.innerHTML = parseInt(obj.value);
+  }
 }
 
 function clearForm(){
@@ -45,7 +48,7 @@ function checkInputValidity(inputField) {
 
 async function blockNumber(){
   const number = document.getElementById("number");
-  const response = await fetch('/api/data', {
+  await fetch('/api/data', {
     method: 'POST',
     headers: {'content-type': 'application/json'},
     body: JSON.stringify(number),

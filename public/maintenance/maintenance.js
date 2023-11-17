@@ -59,11 +59,6 @@ async function addMaintenance(name, aptNum, phoneNum, issue, date, important) {
   });
 
   sortTable(); // Sort the table after adding the new row
-  const response = await fetch('/maintenance', {
-    method: 'POST',
-    headers: {'content-type': 'application/json'},
-    body: JSON.stringify
-  });
 }
 
 

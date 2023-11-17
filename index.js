@@ -92,14 +92,19 @@ apiRouter.post('/chat', async (req, res) => {
 });
 
 // GetData
-apiRouter.get('/data', (_req, res) => {
-    res.send(JSON.stringify(data));
+apiRouter.get('/data', async (_req, res) => {
+    res.send(await allFromCollection('stats'));
 });
 
-// UpdateData
-apiRouter.post('/data', (req, res) => {
-    updateData(req.body)
-    res.send(JSON.stringify(blockedNumbers));
+// UpdateData (just blocking a phone number)
+apiRouter.post('/data', async (req, res) => {
+    try {
+        const result = await updateData(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
 
 // Login
@@ -127,11 +132,6 @@ app.listen(port, () => {
 
 let lastMessage = "";
 let login = [];
-let chat = [];
-let data = {"textsSent": getRandNum(), "textsRecieved": getRandNum(), "phoneNum": getRandNum()};
-let blockedNumbers = [];
-
-
 
 async function updateApartments(_apartments){
     return setCollection(_apartments, 'apartments');
@@ -149,10 +149,11 @@ async function updateChat(_chat){
     return insertOneIntoCollection(_chat, 'chat');
 }
 
-function updateData(_data){
-    //The post function for /data represents a number they want to block
-    blockedNumbers.push(_data)
-    return blockedNumbers;
+async function updateData(phoneNum) {
+    //TODO allow data to update and change based on Twilio.
+    let data = [{"type":"textsSent", "value":JSON.stringify(getRandNum())}, {"type":"textsRecieved", "value":JSON.stringify(getRandNum())}, {"type":"phoneNum", "value":JSON.stringify(getRandNum())}];
+    setCollection(data, 'stats');
+    return insertOneIntoCollection(phoneNum, 'blockedNumbers');
 }
 
 function updateLogin(_login){
@@ -185,8 +186,10 @@ async function setCollection(myData, collectionName){
         await client.connect();
 
         await clearCollection(collection);
-        
+
         for (const obj of myData) {
+            console.log("Insertion array: "+JSON.stringify(myData));
+            console.log("Data we are inserting: "+JSON.stringify(obj));
             await collection.insertOne(obj);
         }
         const response = await collection.find().toArray();
@@ -225,7 +228,6 @@ async function clearCollection(collection){
         throw error;
     }
 }
-
 
 
 function getRandNum(){
