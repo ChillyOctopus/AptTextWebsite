@@ -1,41 +1,49 @@
+// SETUP
+
+// Imports
 const express = require('express');
+const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
+
+// Database
 const { MongoClient } = require('mongodb');
 const mongoConfig = require('./dbConfig.json');
-
-const app = express();
-const testUsername = 'MickyMouse';
-
-//Getting our database set up.
 const mongoUsername = mongoConfig.username;
 const mongoPassword = mongoConfig.password;
 const mongoHostname = mongoConfig.hostname;
 const urlString = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoHostname}/?retryWrites=true&w=majority`;
 
-
-// The service port. In production the front-end code is statically hosted by the service on the same port.
+// General
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-
-// JSON body parsing using built-in middleware
+const app = express();
+app.use(cookieParser());
 app.use(express.json());
-
-// Serve up the front-end static content hosting
 app.use(express.static('public'));
-
-// Router for service endpoints
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 
 
-// GetApartments
+// ENDPOINTS
+
+// Apartments (get & post)
 apiRouter.get('/apartments', async (_req, res) => {
-    res.send(await allFromCollection('apartments'));
+    const username = await getUsernameFromCookie(_req.cookies['token']);
+    if (username === 'Unauthorized') {
+        res.status(401).send({ msg: 'Unauthorized' });
+        return;
+    }
+    res.send(await allFromCollection(username, 'apartments'));
 });
-
-// UpdateApartments
 apiRouter.post('/apartments', async (req, res) => {
-    try{
-        const result = await updateApartments(req.body);
+    try {
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        if (username === 'Unauthorized') {
+            res.status(401).send({ msg: 'Unauthorized' });
+            return;
+        }
+        const result = await setCollection(username, _apartments, 'apartments');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -43,15 +51,23 @@ apiRouter.post('/apartments', async (req, res) => {
     }
 });
 
-// GetMaintenance
+// Maintenance (get & post)
 apiRouter.get('/maintenance', async (_req, res) => {
-    res.send(await allFromCollection('maintenance'));
+    const username = await getUsernameFromCookie(_req.cookies['token']);
+    if (username === 'Unauthorized') {
+        res.status(401).send({ msg: 'Unauthorized' });
+        return;
+    }
+    res.send(await allFromCollection(username, 'maintenance'));
 });
-
-// UpdateMaintenance
 apiRouter.post('/maintenance', async (req, res) => {
-    try{
-        const result = await updateMaintenance(req.body);
+    try {
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        if (username === 'Unauthorized') {
+            res.status(401).send({ msg: 'Unauthorized' });
+            return;
+        }
+        const result = await setCollection(username, _maintenance, 'maintenance');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -59,15 +75,23 @@ apiRouter.post('/maintenance', async (req, res) => {
     }
 });
 
-// GetSettings
+// Settings (get & post)
 apiRouter.get('/settings', async (_req, res) => {
-    res.send(await allFromCollection('settings'));
+    const username = await getUsernameFromCookie(_req.cookies['token']);
+    if (username === 'Unauthorized') {
+        res.status(401).send({ msg: 'Unauthorized' });
+        return;
+    }
+    res.send(await allFromCollection(username, 'settings'));
 });
-
-// UpdateSettings
 apiRouter.post('/settings', async (req, res) => {
     try {
-        const result = await updateSettings(req.body);
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        if (username === 'Unauthorized') {
+            res.status(401).send({ msg: 'Unauthorized' });
+            return;
+        }
+        const result = await setCollection(username, _settings, 'settings');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -75,15 +99,23 @@ apiRouter.post('/settings', async (req, res) => {
     }
 });
 
-// GetChat
+// Chat (get & post)
 apiRouter.get('/chat', async (_req, res) => {
-    res.send(await allFromCollection('chat'));
+    const username = await getUsernameFromCookie(_req.cookies['token']);
+    if (username === 'Unauthorized') {
+        res.status(401).send({ msg: 'Unauthorized' });
+        return;
+    }
+    res.send(await allFromCollection(username, 'chat'));
 });
-
-// UpdateChat
 apiRouter.post('/chat', async (req, res) => {
     try {
-        const result = await updateChat(req.body);
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        if (username === 'Unauthorized') {
+            res.status(401).send({ msg: 'Unauthorized' });
+            return;
+        }
+        const result = await insertOneIntoCollection(username, _chat, 'chat');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -91,15 +123,27 @@ apiRouter.post('/chat', async (req, res) => {
     }
 });
 
-// GetData
+// Stats (get & post)
 apiRouter.get('/data', async (_req, res) => {
-    res.send(await allFromCollection('stats'));
+    const username = await getUsernameFromCookie(_req.cookies['token']);
+    if (username === 'Unauthorized') {
+        res.status(401).send({ msg: 'Unauthorized' });
+        return;
+    }
+    res.send(await allFromCollection(username, 'stats'));
 });
-
-// UpdateData (just blocking a phone number)
 apiRouter.post('/data', async (req, res) => {
     try {
-        const result = await updateData(req.body);
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        if (username === 'Unauthorized') {
+            res.status(401).send({ msg: 'Unauthorized' });
+            return;
+        }
+
+        let data = [{ "type": "textsSent", "value": JSON.stringify(getRandNum()) }, { "type": "textsRecieved", "value": JSON.stringify(getRandNum()) }, { "type": "phoneNum", "value": JSON.stringify(getRandNum()) }];
+        setCollection(data, 'stats');
+
+        const result = await insertOneIntoCollection(username, phoneNum, 'blockedNumbers');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -107,80 +151,159 @@ apiRouter.post('/data', async (req, res) => {
     }
 });
 
-// Login
-apiRouter.post('/login', (req, res) => {
-    updateLogin(req.body);
-    res.send(JSON.stringify(login));
-});
-
-// Text
+// Text (post)
 apiRouter.post('/text/:message', (req, res) => {
     sendMessage(req.params.message);
     res.send(lastMessage);
 });
 
-// Return the application's default page if the path is unknown
+// Register / Login / User (post & post & get)
+apiRouter.post('/register', async (req, res) => {
+    if (await getUser(req.body.username)) {
+        res.status(409).send({ msg: 'Username taken!' });
+    } else {
+        const user = await createUser(req.body.username, req.body.password);
+        setAuthCookie(res, user.token);
+        res.send({
+            id: user._id,
+        });
+    }
+});
+apiRouter.post('/login', async (req, res) => {
+    const user = await getUser(req.body.username);
+    if (user) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            setAuthCookie(res, user.token);
+            res.send({ id: user._id });
+            return;
+        }
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+});
+apiRouter.get('/user', async (req, res) => {
+    authToken = req.cookies['token'];
+    const client = MongoClient(urlString);
+    try {
+        const db = client.db('master');
+        const collection = db.collection('user');
+        await client.connect();
+        const user = await collection.findOne({ token: authToken });
+        if (user) {
+            res.send({ username: user.username });
+            return;
+        }
+        res.status(401).send({ msg: 'Unauthorized' });
+
+    } catch (error) {
+        throw error;
+    } finally {
+        client.close;
+    }
+});
+
+// Start
 app.use((req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+    res.sendFile('index.html', { root: 'public' });
 });
-
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+    console.log(`Listening on port ${port}`);
 });
 
 
 
-let lastMessage = "";
-let login = [];
+//USER FUNCTIONS
 
-async function updateApartments(_apartments){
-    return setCollection(_apartments, 'apartments');
-}
+// Create
+async function createUser(username, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = {
+        username: username,
+        password: passwordHash,
+        token: uuid.v4(),
+    };
 
-async function updateMaintenance(_maintenance){
-    return setCollection(_maintenance, 'maintenance');
-}
-
-async function updateSettings(_settings) {
-    return setCollection(_settings, 'settings');
-}
-
-async function updateChat(_chat){
-    return insertOneIntoCollection(_chat, 'chat');
-}
-
-async function updateData(phoneNum) {
-    //TODO allow data to update and change based on Twilio.
-    let data = [{"type":"textsSent", "value":JSON.stringify(getRandNum())}, {"type":"textsRecieved", "value":JSON.stringify(getRandNum())}, {"type":"phoneNum", "value":JSON.stringify(getRandNum())}];
-    setCollection(data, 'stats');
-    return insertOneIntoCollection(phoneNum, 'blockedNumbers');
-}
-
-function updateLogin(_login){
-    //We already know it's going to be that.
-    login = {"username": _login.username, "password": _login.password};
-    return login;
-}
-
-function sendMessage(_message){
-    lastMessage = _message;
-    return lastMessage;
-}
-
-
-
-async function allFromCollection(collectionName){
     const client = new MongoClient(urlString);
-    const db = client.db(testUsername);
+    try {
+        const db = client.db('master');
+        const collection = db.collection('user');
+
+        await client.connect();
+        await collection.insertOne(user);
+
+        return user;
+
+    } catch (error) {
+        throw error;
+    } finally {
+        await client.close();
+    }
+}
+
+// Find
+async function getUser(username) {
+    const client = new MongoClient(urlString);
+    try {
+        const db = client.db('master');
+        const collection = db.collection('user');
+
+        await client.connect();
+        return await collection.findOne({ username: username });
+    } catch (error) {
+        throw error;
+    } finally {
+        //await client.close();
+    }
+}
+
+// Cookies
+function setAuthCookie(res, authToken) {
+    res.cookie('token', authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+}
+
+// Find with cookie
+async function getUsernameFromCookie(token) {
+    const client = new MongoClient(urlString);
+    try {
+        const db = client.db('master');
+        const collection = db.collection('user');
+        await client.connect();
+        const user = await collection.findOne({ token: token });
+        if (user) {
+            return user.username;
+        }
+
+        return "Unauthorized";
+
+    } catch (error) {
+        throw error;
+    } finally {
+        client.close;
+    }
+}
+
+
+
+//GENERAL DATABASE FUNCTIONS
+
+// Find all
+async function allFromCollection(username, collectionName) {
+    const client = new MongoClient(urlString);
+    const db = client.db(username);
     const collection = db.collection(collectionName);
+
     await client.connect();
     return JSON.stringify(await collection.find().toArray());
 }
 
-async function setCollection(myData, collectionName){
+// Clear and set
+async function setCollection(username, myData, collectionName) {
     const client = new MongoClient(urlString);
     try {
-        const db = client.db(testUsername);
+        const db = client.db(username);
         const collection = db.collection(collectionName);
 
         await client.connect();
@@ -202,15 +325,16 @@ async function setCollection(myData, collectionName){
     }
 }
 
-async function insertOneIntoCollection(myData, collectionName){
+// Insert one record
+async function insertOneIntoCollection(username, myData, collectionName) {
     const client = new MongoClient(urlString);
     try {
-        const db = client.db(testUsername);
+        const db = client.db(username);
         const collection = db.collection(collectionName);
 
         await client.connect();
         await collection.insertOne(myData);
-        
+
         const response = await collection.find().toArray();
         return response;
 
@@ -221,7 +345,8 @@ async function insertOneIntoCollection(myData, collectionName){
     }
 }
 
-async function clearCollection(collection){
+// Clear collection
+async function clearCollection(collection) {
     try {
         await collection.deleteMany();
     } catch (error) {
@@ -230,41 +355,105 @@ async function clearCollection(collection){
 }
 
 
-function getRandNum(){
-  return Math.floor(Math.random() * (100000 - 500) + 500);
+
+//UTILITY
+
+// Random number
+function getRandNum() {
+    return Math.floor(Math.random() * (100000 - 500) + 500);
 }
 
+// Send text
+function sendMessage(_message) {
+    return _message;
+}
+
+
+
+//EXAMPLE CODE
 /*
+    const { MongoClient } = require('mongodb');
+    const uuid = require('uuid');
+    const bcrypt = require('bcrypt');
+    const cookieParser = require('cookie-parser');
+    const express = require('express');
+    const app = express();
 
-// Example code:
-// SubmitScore
-apiRouter.post('/score', (req, res) => {
-    scores = updateScores(req.body, scores);
-    res.send(scores);
-  });
+    const mongoCreds = require('./dbConfig.json');
+    const userName = mongoCreds.username;
+    const password = mongoCreds.password;
+    const hostname = mongoCreds.hostname;
 
-// updateScores considers a new score for inclusion in the high scores.
-// The high scores are saved in memory and disappear whenever the service is restarted.
-let scores = [];
-function updateScores(newScore, scores) {
-  let found = false;
-  for (const [i, prevScore] of scores.entries()) {
-    if (newScore.score > prevScore.score) {
-      scores.splice(i, 0, newScore);
-      found = true;
-      break;
+    const url = `mongodb+srv://${userName}:${password}@${hostname}`;
+    const client = new MongoClient(url);
+    const collection = client.db('authTest').collection('user');
+
+    app.use(cookieParser());
+    app.use(express.json());
+
+    // createAuthorization from the given credentials
+    app.post('/auth/create', async (req, res) => {
+    if (await getUser(req.body.email)) {
+        res.status(409).send({ msg: 'Existing user' });
+    } else {
+        const user = await createUser(req.body.email, req.body.password);
+        setAuthCookie(res, user.token);
+        res.send({
+        id: user._id,
+        });
     }
-  }
+    });
 
-  if (!found) {
-    scores.push(newScore);
-  }
+    // loginAuthorization from the given credentials
+    app.post('/auth/login', async (req, res) => {
+    const user = await getUser(req.body.email);
+    if (user) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
+        setAuthCookie(res, user.token);
+        res.send({ id: user._id });
+        return;
+        }
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+    });
 
-  if (scores.length > 10) {
-    scores.length = 10;
-  }
+    // getMe for the currently authenticated user
+    app.get('/user/me', async (req, res) => {
+    authToken = req.cookies['token'];
+    const user = await collection.findOne({ token: authToken });
+    if (user) {
+        res.send({ email: user.email });
+        return;
+    }
+    res.status(401).send({ msg: 'Unauthorized' });
+    });
 
-  return scores;
-}
+    function getUser(email) {
+    return collection.findOne({ email: email });
+    }
 
+    async function createUser(email, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+    const user = {
+        email: email,
+        password: passwordHash,
+        token: uuid.v4(),
+    };
+    await collection.insertOne(user);
+
+    return user;
+    }
+
+    function setAuthCookie(res, authToken) {
+    res.cookie('token', authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+    }
+
+    const port = 8080;
+    app.listen(port, function () {
+    console.log(`Listening on port ${port}`);
+    });
 */

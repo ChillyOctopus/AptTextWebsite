@@ -19,5 +19,5 @@ In Maintenance:
 
 In index.js:
     - make Chat endpoints functional.
-    - twilio endpoints functional.
+    - twilio endpoints functional (i.e. sendMessage)
     - stop sending in newly generated numbers for the texts sent and what not - use Twilio.

@@ -1,5 +1,11 @@
 async function loadOutbound(){
     const response = await fetch('/api/settings');
+    if(response.status === 401){
+        window.location.href = "http://localhost:4000/";
+        console.log("Redirected");
+        return;
+    } 
+
     const responseJson = await response.json();
 
     for(const obj of responseJson){
