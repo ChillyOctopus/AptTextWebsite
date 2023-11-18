@@ -2,8 +2,6 @@ async function login(event){
 
     event.preventDefault();
 
-    window.location.href = "http://localhost:4000/apartments/apartments.html";
-
     const username = document.getElementById("username").textContent;
     const password = document.getElementById("password").textContent;
 
@@ -13,13 +11,14 @@ async function login(event){
          body: JSON.stringify({"username": username, "password": password})
     });
 
-    if(response.status === 409){
-        const resBody = await response.json();
-        showToast(resBody.msg, 100000);
-    } 
-
-    console.log(response.body);
-    
+    const resBody = await response.json();
+    console.log(resBody)
+    if(response.status != 200){
+        console.log(resBody.body);
+        showToast(resBody.msg, 10000);
+    } else {
+        window.location.href = "http://localhost:4000/apartments/apartments.html";
+    }
 }
 
 async function register(event){
@@ -60,4 +59,15 @@ function showToast(message, duration = 1500) {
     setTimeout(function () {
       toastContainer.removeChild(toast);
     }, duration + 500);
+}
+
+function checkButtonEnable() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    const loginButton = document.getElementById("loginButton");
+    const registerButton = document.getElementById("registerButton");
+
+    loginButton.disabled = !(user.length !== 0 && pass.length !== 0);
+    registerButton.disabled = !(user.length !== 0 && pass.length !== 0);
 }

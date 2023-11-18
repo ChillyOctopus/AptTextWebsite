@@ -171,6 +171,9 @@ apiRouter.post('/register', async (req, res) => {
 });
 apiRouter.post('/login', async (req, res) => {
     const user = await getUser(req.body.username);
+    console.log(JSON.stringify(user));
+    console.log(req.body.username);
+    console.log(req.body.password);
     if (user) {
         if (await bcrypt.compare(req.body.password, user.password)) {
             setAuthCookie(res, user.token);
