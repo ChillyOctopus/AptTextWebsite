@@ -21,7 +21,7 @@ async function login(event){
         console.log(resBody.body);
         showToast(resBody.msg, 1000);
     } else {
-        window.location.href = "http://localhost:4000/apartments/apartments.html";
+        window.location.href = "https://startup.lethallegacy.click/apartments/apartments.html";
     }
 }
 
@@ -48,7 +48,7 @@ async function register(event){
         const resBody = await response.json();
         showToast(resBody.msg, 1000);
     } else {
-        window.location.href = "http://localhost:4000/apartments/apartments.html";
+        window.location.href = "https://startup.lethallegacy.click/apartments/apartments.html";
     }
     
 }
