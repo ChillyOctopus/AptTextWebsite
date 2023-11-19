@@ -2,8 +2,12 @@ async function login(event){
 
     event.preventDefault();
 
-    const username = document.getElementById("username").textContent;
-    const password = document.getElementById("password").textContent;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    checkButtonEnable();
+
 
     const response = await fetch('/api/login', {
          method: 'POST',
@@ -15,7 +19,7 @@ async function login(event){
     console.log(resBody)
     if(response.status != 200){
         console.log(resBody.body);
-        showToast(resBody.msg, 10000);
+        showToast(resBody.msg, 1000);
     } else {
         window.location.href = "http://localhost:4000/apartments/apartments.html";
     }
@@ -25,8 +29,11 @@ async function register(event){
 
     event.preventDefault();
 
-    const username = document.getElementById("username").textContent;
-    const password = document.getElementById("password").textContent;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    checkButtonEnable();
 
     const response = await fetch('/api/register', {
         method: 'POST',
@@ -35,12 +42,15 @@ async function register(event){
     });
 
 
-    if(response.status === 409){
+    const respBody = await response.json();
+    console.log(respBody);
+    if(response.status != 200){
         const resBody = await response.json();
-        showToast(resBody.msg, 100000);
+        showToast(resBody.msg, 1000);
+    } else {
+        window.location.href = "http://localhost:4000/apartments/apartments.html";
     }
     
-    console.log(response.body);
 }
 
 

@@ -14,6 +14,7 @@ const mongoPassword = mongoConfig.password;
 const mongoHostname = mongoConfig.hostname;
 const urlString = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoHostname}/?retryWrites=true&w=majority`;
 
+
 // General
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 const app = express();
@@ -43,7 +44,7 @@ apiRouter.post('/apartments', async (req, res) => {
             res.status(401).send({ msg: 'Unauthorized' });
             return;
         }
-        const result = await setCollection(username, _apartments, 'apartments');
+        const result = await setCollection(username, req.body, 'apartments');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -91,7 +92,7 @@ apiRouter.post('/settings', async (req, res) => {
             res.status(401).send({ msg: 'Unauthorized' });
             return;
         }
-        const result = await setCollection(username, _settings, 'settings');
+        const result = await setCollection(username, req.body, 'settings');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -115,7 +116,7 @@ apiRouter.post('/chat', async (req, res) => {
             res.status(401).send({ msg: 'Unauthorized' });
             return;
         }
-        const result = await insertOneIntoCollection(username, _chat, 'chat');
+        const result = await insertOneIntoCollection(username, req.body, 'chat');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -143,7 +144,7 @@ apiRouter.post('/data', async (req, res) => {
         let data = [{ "type": "textsSent", "value": JSON.stringify(getRandNum()) }, { "type": "textsRecieved", "value": JSON.stringify(getRandNum()) }, { "type": "phoneNum", "value": JSON.stringify(getRandNum()) }];
         setCollection(data, 'stats');
 
-        const result = await insertOneIntoCollection(username, phoneNum, 'blockedNumbers');
+        const result = await insertOneIntoCollection(username, req.body, 'blockedNumbers');
         res.json(result);
     } catch (error) {
         console.error(error);
@@ -171,17 +172,19 @@ apiRouter.post('/register', async (req, res) => {
 });
 apiRouter.post('/login', async (req, res) => {
     const user = await getUser(req.body.username);
-    console.log(JSON.stringify(user));
-    console.log(req.body.username);
-    console.log(req.body.password);
+    //console.log("Inside api/login.");
     if (user) {
+        //console.log("Found user: "+JSON.stringify(user));
         if (await bcrypt.compare(req.body.password, user.password)) {
+            //console.log("Password correct.");
             setAuthCookie(res, user.token);
             res.send({ id: user._id });
             return;
         }
     }
+
     res.status(401).send({ msg: 'Unauthorized' });
+
 });
 apiRouter.get('/user', async (req, res) => {
     authToken = req.cookies['token'];
@@ -241,7 +244,6 @@ async function createUser(username, password) {
         await client.close();
     }
 }
-
 // Find
 async function getUser(username) {
     const client = new MongoClient(urlString);
@@ -257,7 +259,6 @@ async function getUser(username) {
         //await client.close();
     }
 }
-
 // Cookies
 function setAuthCookie(res, authToken) {
     res.cookie('token', authToken, {
@@ -266,7 +267,6 @@ function setAuthCookie(res, authToken) {
         sameSite: 'strict',
     });
 }
-
 // Find with cookie
 async function getUsernameFromCookie(token) {
     const client = new MongoClient(urlString);

@@ -2,7 +2,7 @@ async function loadApartments(){
 
   // Get the apartments from the service
   const response = await fetch('/api/apartments');
-  apartments = await response.json();
+  const apartments = await response.json();
 
   displayApartments(apartments);
 }

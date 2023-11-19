@@ -58,6 +58,9 @@ async function save(){
  
     let contact = {"type": "contact", "value": contactInput.value};
     let website = {"type": "website", "value": websiteInput.value};
+    
+    document.getElementById("contact").value = "";
+    document.getElementById("website").value = "";
 
     const response = await fetch('/api/settings', {
         method: 'POST',
@@ -67,13 +70,7 @@ async function save(){
 
     const responseJson = await response.json();
     responseJson.forEach(obj =>{
-        if(obj.type === 'contact'){
-            contactInput.value = "";
-            document.getElementById("contact").setAttribute("Placeholder", obj.value);
-        } else {
-            websiteInput.value = "";
-            document.getElementById("website").setAttribute("Placeholder", obj.value);
-        }
+        document.getElementById(obj.type).setAttribute("Placeholder", obj.value);
     });
     
     showToast("Saved your information!");
