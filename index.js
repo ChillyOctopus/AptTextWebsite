@@ -5,6 +5,7 @@ const express = require('express');
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
+const { WebSocketServer } = require('ws');
 
 // Database
 const { MongoClient } = require('mongodb');
@@ -14,7 +15,6 @@ const mongoPassword = mongoConfig.password;
 const mongoHostname = mongoConfig.hostname;
 const urlString = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoHostname}/?retryWrites=true&w=majority`;
 
-
 // General
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 const app = express();
@@ -23,7 +23,11 @@ app.use(express.json());
 app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
-
+const webPort = process.argv.length > 2 ? process.argv[2] : 4100;
+const wss = new WebSocketServer({ noServer: true });
+server = app.listen(webPort, () => {
+  console.log(`Listening on ${webPort}`);
+});
 
 
 // ENDPOINTS
@@ -154,7 +158,7 @@ apiRouter.post('/data', async (req, res) => {
 
 // Text (post)
 apiRouter.post('/text/:message', (req, res) => {
-    sendMessage(req.params.message);
+    sendTextMessage(req.params.message);
     res.send(lastMessage);
 });
 
@@ -366,8 +370,70 @@ function getRandNum() {
     return Math.floor(Math.random() * (100000 - 500) + 500);
 }
 
+
+
+//WEBSOCKET
+
+//Our array of connections
+let connections = [];
+
+// Handle the protocol upgrade from HTTP to WebSocket
+server.on('upgrade', (request, socket, head) => {
+    wss.handleUpgrade(request, socket, head, function done(ws) {
+      wss.emit('connection', ws, request);
+    });
+});
+
+// Handle the on connection, message, close, and pong logic
+wss.on('connection', (ws) => {
+  const connection = { id: connections.length + 1, alive: true, ws: ws };
+  connections.push(connection);
+
+  // Forward messages to everyone except the sender
+  ws.on('message', function message(data) {
+    connections.forEach((c) => {
+      if (c.id !== connection.id) {
+        c.ws.send(data);
+      }
+    });
+  });
+
+  // Remove the closed connection so we don't try to forward anymore
+  ws.on('close', () => {
+    connections.findIndex((o, i) => {
+      if (o.id === connection.id) {
+        connections.splice(i, 1);
+        return true;
+      }
+    });
+  });
+
+  // Respond to pong messages by marking the connection alive
+  ws.on('pong', () => {
+    connection.alive = true;
+  });
+
+  // Handle how often to ping and pong the connections
+  setInterval(() => {
+      connections.forEach((c) => {
+        // Kill any connection that didn't respond to the ping last time
+        if (!c.alive) {
+          c.ws.terminate();
+        } else {
+          c.alive = false;
+          c.ws.ping();
+        }
+      });
+  }, 30000);
+
+
+});
+  
+
+
+
 // Send text
-function sendMessage(_message) {
+function sendTextMessage(_message) {
     return _message;
 }
 

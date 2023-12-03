@@ -8,18 +8,22 @@ async function loadChat(){
   displayChat(chat);
 }
 
-function displayChat(chat){
+async function displayChat(chat){
+  const username = (await fetch('api/user')).username;
   for(const obj of chat){
     if(obj.speaker === "ai"){
       addBubble(createAIChatBubble(obj.message));
-    } else {
+    } else if(obj.speaker === username){
       addBubble(createUserChatBubble(obj.message));
+    } else {
+      addBubble(createRandoChatBubble(obj.message, obj.speaker));
     }
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   const textArea = document.getElementById('textAreaExample');
+  const username = (await fetch('api/user')).username;
 
   textArea.addEventListener('keydown', async function(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -37,10 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
           const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {'content-type': 'application/json'},
-            body: JSON.stringify({"speaker":"user", "message":message}),
+            body: JSON.stringify({"speaker":username, "message":message}),
           });
 
           addBubble(createUserChatBubble(message));
+          sendMessageOverWebsocket(username, message);
 
         } else {
 
@@ -51,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
           
           addBubble(createAIChatBubble(message));
+          sendMessageOverWebsocket(message, "ai");
         }
 
         // Clear the textarea
@@ -115,10 +121,40 @@ function createAIChatBubble(message){
   return chatBubble;
 }
 
+function createRandoChatBubble(speaker, message){
+  const chatBubble = document.createElement('div');
+  chatBubble.className = 'd-flex flex-row justify-content-start mb-4';
+
+  const chatMessage = document.createElement('div');
+  chatMessage.className = 'p-3 ms-3'
+  chatMessage.style.borderRadius = '15px'
+  chatMessage.style.backgroundColor = 'rgba(57, 192, 237, .2)';
+  chatMessage.innerHTML = '<p class="small mb-0">' + speaker + ': ' + message + '</p>';
+
+  const randoAvatar = document.createElement('img')    
+  randoAvatar.src = '/assets/randoLogo.png'; // Replace with the rando's avatar image URL
+  randoAvatar.alt = speaker;
+  randoAvatar.style.width = '45px';
+  randoAvatar.style.height = '100%';
+  randoAvatar.style.marginTop = '7px';
+  randoAvatar.style.padding = '3px';
+
+  chatBubble.appendChild(randoAvatar);
+  chatBubble.appendChild(chatMessage);
+
+  return chatBubble;
+}
+
 function addBubble(chatBubble){
   const chatBody = document.getElementById('chat1');
   chatBody.appendChild(chatBubble);
   return chatBubble;
+}
+
+function sendMessageOverWebsocket(sender, message) {
+  if (!!message) {
+    socket.send(`{"sender":"${sender}", "message":"${message}"}`);
+  }
 }
 
 // Function to simulate flipping a coin
@@ -133,5 +169,15 @@ function flipCoin() {
         return 0;
     }
 }
+
+// Adjust the webSocket protocol to what is being used for HTTP
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+socket.onmessage = async (event) => {
+  const text = await event.data.text();
+  const chat = JSON.parse(text);
+  createRandoChatBubble(event.sender, event.message);
+};
 
 loadChat();
