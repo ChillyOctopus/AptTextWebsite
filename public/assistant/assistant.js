@@ -1,3 +1,8 @@
+//Initialize websocket functionality
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+
 async function loadChat(){
   let chat = [];
 
@@ -44,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             body: JSON.stringify({"speaker":username, "message":message}),
           });
 
-          addBubble(createUserChatBubble(message));
+          addBubble(createUserChatBubble(username, message));
           sendMessageOverWebsocket(username, message);
 
         } else {
@@ -56,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           });
           
           addBubble(createAIChatBubble(message));
-          sendMessageOverWebsocket(message, "ai");
+          sendMessageOverWebsocket("ai", message);
         }
 
         // Clear the textarea
@@ -151,12 +156,6 @@ function addBubble(chatBubble){
   return chatBubble;
 }
 
-function sendMessageOverWebsocket(sender, message) {
-  if (!!message) {
-    socket.send(`{"sender":"${sender}", "message":"${message}"}`);
-  }
-}
-
 // Function to simulate flipping a coin
 function flipCoin() {
     // Generate a random number between 0 and 1
@@ -170,14 +169,21 @@ function flipCoin() {
     }
 }
 
-// Adjust the webSocket protocol to what is being used for HTTP
-const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+function sendMessageOverWebsocket(sender, message) {
+  if (!!message) {
+    socket.send(JSON.stringify({ sender, message }));
+  }
+}
 
 socket.onmessage = async (event) => {
-  const text = await event.data.text();
-  const chat = JSON.parse(text);
-  createRandoChatBubble(event.sender, event.message);
+  const data = JSON.parse(event.data);
+  if(data.sender === "ai"){
+    createAIChatBubble(data.message);
+  } else if(data.sender === (await fetch('/api/user').username)){
+    createUserChatBubble(data.sender, data.message);
+  } else {
+    createRandoChatBubble(data.sender, data.message);
+  }
 };
 
 loadChat();

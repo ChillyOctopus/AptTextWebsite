@@ -23,12 +23,7 @@ app.use(express.json());
 app.use(express.static('public'));
 var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
-const webPort = process.argv.length > 2 ? process.argv[2] : 4100;
 const wss = new WebSocketServer({ noServer: true });
-server = app.listen(webPort, () => {
-  console.log(`Listening on ${webPort}`);
-});
-
 
 // ENDPOINTS
 
@@ -215,10 +210,10 @@ apiRouter.get('/user', async (req, res) => {
 app.use((req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
+server = app.listen(port, () => {
+    console.log(`Listening on ${port}`);
 });
-
+  
 
 
 //USER FUNCTIONS
