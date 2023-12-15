@@ -2,7 +2,6 @@
 const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
 const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
-
 async function loadChat(){
   let chat = [];
 
@@ -14,22 +13,29 @@ async function loadChat(){
 }
 
 async function displayChat(chat){
-  const username = (await fetch('api/user')).username;
+
+  const userObj = await fetch('/api/username');
+  var userJson = await userObj.json();
+  var username = userJson.username;
+
   for(const obj of chat){
     if(obj.speaker === "ai"){
       addBubble(createAIChatBubble(obj.message));
     } else if(obj.speaker === username){
       addBubble(createUserChatBubble(obj.message));
     } else {
-      addBubble(createRandoChatBubble(obj.message, obj.speaker));
+      addBubble(createRandoChatBubble(obj.speaker, obj.message));
     }
   }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-  const textArea = document.getElementById('textAreaExample');
-  const username = (await fetch('api/user')).username;
-
+  const textArea = document.getElementById('textAreaExample');  
+  
+  const userObj = await fetch('/api/username');
+  var userJson = await userObj.json();
+  var username = userJson.username;
+  
   textArea.addEventListener('keydown', async function(e) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault(); // Prevents a newline from being added
@@ -38,37 +44,22 @@ document.addEventListener('DOMContentLoaded', async function() {
       const message = textArea.value.trim();
 
       if (message) {
-        // Create a new chat bubble
-        // flip a coin to see if its the ai or us.
-        const coin = flipCoin();
-        if(coin){
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {'content-type': 'application/json'},
+          body: JSON.stringify({speaker:username, message:message}),
+        });
 
-          const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({"speaker":username, "message":message}),
-          });
+        addBubble(createUserChatBubble(message));
+        sendMessageOverWebsocket(username, message);
 
-          addBubble(createUserChatBubble(username, message));
-          sendMessageOverWebsocket(username, message);
-
-        } else {
-
-          const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: {'content-type': 'application/json'},
-            body: JSON.stringify({"speaker":"ai", "message":message}),
-          });
-          
-          addBubble(createAIChatBubble(message));
-          sendMessageOverWebsocket("ai", message);
-        }
-
-        // Clear the textarea
-        textArea.value = '';
-        // Scroll to the bottom of the chat body
-        scrollChatToBottom();
       }
+
+      // Clear the textarea
+      textArea.value = '';
+      // Scroll to the bottom of the chat body
+      scrollChatToBottom();
+
     }
   });
 });
@@ -156,34 +147,20 @@ function addBubble(chatBubble){
   return chatBubble;
 }
 
-// Function to simulate flipping a coin
-function flipCoin() {
-    // Generate a random number between 0 and 1
-    const randomValue = Math.random();
-
-    // Use the random value to determine the result
-    if (randomValue < 0.5) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
-function sendMessageOverWebsocket(sender, message) {
+function sendMessageOverWebsocket(speaker, message) {
   if (!!message) {
-    socket.send(JSON.stringify({ sender, message }));
+    socket.send(JSON.stringify({speaker:speaker, message:message}));
   }
 }
 
 socket.onmessage = async (event) => {
-  const data = JSON.parse(event.data);
-  if(data.sender === "ai"){
-    createAIChatBubble(data.message);
-  } else if(data.sender === (await fetch('/api/user').username)){
-    createUserChatBubble(data.sender, data.message);
-  } else {
-    createRandoChatBubble(data.sender, data.message);
-  }
+  const data = await JSON.parse(event.data);
+  addBubble(createRandoChatBubble(data.speaker, data.message));
+  const response = await fetch('/api/chat', {
+    method: 'POST',
+    headers: {'content-type': 'application/json'},
+    body: JSON.stringify({speaker:data.speaker, message:data.message}),
+  });
 };
 
 loadChat();

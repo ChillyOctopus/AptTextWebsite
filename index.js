@@ -157,7 +157,7 @@ apiRouter.post('/text/:message', (req, res) => {
     res.send(lastMessage);
 });
 
-// Register / Login / User (post & post & get)
+// Register / Login / User / Username (post & post & get)
 apiRouter.post('/register', async (req, res) => {
     if (await getUser(req.body.username)) {
         res.status(409).send({ msg: 'Username taken!' });
@@ -194,6 +194,7 @@ apiRouter.get('/user', async (req, res) => {
         await client.connect();
         const user = await collection.findOne({ token: authToken });
         if (user) {
+            res.header('Content-Type', 'application/json');
             res.send({ username: user.username });
             return;
         }
@@ -203,6 +204,15 @@ apiRouter.get('/user', async (req, res) => {
         throw error;
     } finally {
         client.close;
+    }
+});
+apiRouter.get('/username', async (req, res) => {
+    try {
+        const username = await getUsernameFromCookie(req.cookies['token']);
+        res.header('Content-Type', 'application/json');
+        res.send(JSON.stringify({username: username}));
+    } catch (error) {
+        throw error;
     }
 });
 
@@ -386,10 +396,11 @@ wss.on('connection', (ws) => {
 
   // Forward messages to everyone except the sender
   ws.on('message', function message(data) {
+    const jsonData = JSON.parse(data);
     connections.forEach((c) => {
-      if (c.id !== connection.id) {
-        c.ws.send(data);
-      }
+        if (c.id !== connection.id) {
+            c.ws.send(JSON.stringify(jsonData));
+        }
     });
   });
 

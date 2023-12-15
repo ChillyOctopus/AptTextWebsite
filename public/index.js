@@ -22,8 +22,8 @@ async function login(event){
         showToast(resBody.msg, 1000);
     } else {
         //The top one is used for developement, the bottom one is used for production. 
-        window.location.href = "http://localhost:4000/apartments/apartments.html";
-        //window.location.href = "https://startup.lethallegacy.click/apartments/apartments.html";
+        //window.location.href = "http://localhost:4000/apartments/apartments.html";
+        window.location.href = "https://startup.lethallegacy.click/apartments/apartments.html";
     }
 }
 
